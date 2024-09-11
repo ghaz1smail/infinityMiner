@@ -62,7 +62,7 @@ class ForgetScreen extends StatelessWidget {
                         const Spacer(),
                         InkWell(
                           onTap: () {
-                            Get.offAllNamed('/log_in');
+                            Get.offAllNamed('/login');
                           },
                           child: Text(
                             'back'.tr,

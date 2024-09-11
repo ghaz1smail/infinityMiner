@@ -1,12 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:infinityminer/models/app_model.dart';
 import 'package:infinityminer/helper/get_initial.dart';
-import 'package:infinityminer/view/register/register_screen.dart';
 import 'package:infinityminer/view/screens/updated_screen.dart';
 import 'package:infinityminer/models/user_model.dart';
 
@@ -19,6 +17,17 @@ class AuthController extends GetxController {
   UsersModel? userData;
   bool loading = false, admin = false, sent = false, signIn = true;
   AppModel appData = AppModel();
+
+  checkUserAvailable() async {
+    var uid = getStorage.read('uid');
+    if (uid == null) {
+      Get.offAllNamed('/login');
+    } else {
+      if (userData == null) {
+        await getCurrentUserData();
+      }
+    }
+  }
 
   Future<UsersModel?> getUserData(uid) async {
     await firestore.collection('users').doc(uid).get().then((value) {
@@ -110,11 +119,13 @@ class AuthController extends GetxController {
   }
 
   logOut() async {
-    Get.off(() => const RegisterScreen());
     admin = false;
     userData = null;
     getStorage.remove('uid');
-    firebaseAuth.signOut();
+    if (firebaseAuth.currentUser != null) {
+      firebaseAuth.signOut();
+    }
+    Get.offAllNamed('/login');
   }
 
   clearData() async {
@@ -146,10 +157,8 @@ class AuthController extends GetxController {
         .then((value) async {
       appData = AppModel.fromJson(value.data() as Map);
     }).onError((e, e1) {
-      FlutterNativeSplash.remove();
       Get.off(() => const UpdatedScreen());
     });
-    FlutterNativeSplash.remove();
     if (!appData.server) {
       Get.off(() => const UpdatedScreen());
       return;
@@ -158,7 +167,7 @@ class AuthController extends GetxController {
     var uid = getStorage.read('uid');
 
     if (uid == null) {
-      Get.offAllNamed('/log_in');
+      Get.offAllNamed('/login');
     } else {
       admin = appData.admins!.contains(uid);
 
@@ -234,8 +243,8 @@ class AuthController extends GetxController {
       switch (e.code) {
         case 'email-already-in-use':
           customDialog.customDialog(
-            'alreadyHave'.tr,
-            'this_email_address_is_associated_with_an_existing_account'.tr,
+            'something_went_wrong'.tr,
+            'this_email_address_is_already_in_use'.tr,
             {},
             {
               'title': 'ok'.tr,
@@ -343,9 +352,8 @@ class AuthController extends GetxController {
       switch (e.code) {
         case 'wrong-password':
           customDialog.customDialog(
+            'something_went_wrong'.tr,
             'incorrect_password'.tr,
-            'the_password_youve_entered_is_incorrect.please_try_again_to_sign_in'
-                .tr,
             {},
             {
               'title': 'ok'.tr,
@@ -357,9 +365,8 @@ class AuthController extends GetxController {
           break;
         case 'user-not-found' || 'invalid-email':
           customDialog.customDialog(
-            'no_account_found.create_a_new_account?'.tr,
-            'it_looks_like_the_email_address_isnt_connected_to_an_account.you_can_create_a_new_account_or_try_again'
-                .tr,
+            'your_account_not_found'.tr,
+            'you_can_create_a_new_account_or_try_again'.tr,
             {
               'title': 'try_again'.tr,
               'function': () {

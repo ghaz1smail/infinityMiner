@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:infinityminer/admin/admin_acreen.dart';
-import 'package:infinityminer/view/register/forget_screen.dart';
-import 'package:infinityminer/view/register/register_screen.dart';
-import 'package:infinityminer/view/screens/splash_screen.dart';
-import 'package:infinityminer/view/user/user_screen.dart';
 
 class AppConstant {
   final imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
@@ -19,14 +14,6 @@ class AppConstant {
       blurRadius: 5,
     ),
   ];
-
-  Map<String, Widget Function(BuildContext)> routes = {
-    '/': (context) => const SplashScreen(),
-    '/log_in': (context) => const RegisterScreen(),
-    '/admin': (context) => const AdminScreen(),
-    '/forgot_password': (context) => const ForgetScreen(),
-    '/user': (context) => const UserScreen(),
-  };
 
   ThemeData theme = ThemeData(
       useMaterial3: false,

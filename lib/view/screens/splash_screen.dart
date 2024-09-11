@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinityminer/controllers/auth_controller.dart';
 import 'package:infinityminer/helper/get_initial.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    authController.navigator();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Get.find<AuthController>().navigator();
     return Scaffold(
         body: Stack(
       alignment: Alignment.center,

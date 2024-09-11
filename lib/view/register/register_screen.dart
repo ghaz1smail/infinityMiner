@@ -30,8 +30,8 @@ class RegisterScreen extends StatelessWidget {
                                 border: Border.all(
                                     width: 0.5, color: Colors.black45),
                                 borderRadius: BorderRadius.circular(10)),
-                        width: isMobile ? null : 400,
-                        height: isMobile ? null : 600,
+                        width: isMobile ? Get.width : 400,
+                        height: isMobile ? Get.height : 600,
                         child: Column(
                           children: [
                             Image.asset(assets.logo, height: 100, width: 100),
