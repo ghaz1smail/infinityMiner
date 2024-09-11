@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "706122592652",
+    "project_id": "infinity-miner",
+    "storage_bucket": "infinity-miner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:706122592652:android:306a557a89122d19cd66a9",
+        "android_client_info": {
+          "package_name": "com.example.infinityminer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX04izIrSCG-gpEOYetXpRzWoy5rL7hPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
