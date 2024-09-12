@@ -1,13 +1,53 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:infinityminer/helper/get_initial.dart';
 
 class UserController extends GetxController {
-  RxBool checking = true.obs;
+  var getStorage = GetStorage();
+  RxInt selectedIndex = 0.obs;
+  bool checking = true;
 
-  checkingUser() async {
-    checking.value = true;
-    await Future.delayed(const Duration(milliseconds: 250));
-    await authController.checkUserAvailable();
-    checking.value = false;
+  changeSelectedIndex(String path) {
+    switch (path) {
+      case '/home':
+        selectedIndex.value = 0;
+        break;
+      case '/mining-devices':
+        selectedIndex.value = 1;
+        break;
+      case '/wallet':
+        selectedIndex.value = 2;
+        break;
+      case '/mine':
+        selectedIndex.value = 3;
+        break;
+      case '/contact-us':
+        selectedIndex.value = 4;
+        break;
+      case '/profile':
+        selectedIndex.value = 5;
+        break;
+    }
+    checkUserRoute();
+  }
+
+  checkUserRoute({fromPath = '/home'}) async {
+    checking = true;
+    update();
+    await Future.delayed(const Duration(milliseconds: 100));
+    var uid = getStorage.read('uid');
+    Get.log(uid.toString());
+    if (uid == null) {
+      if (fromPath != '/') {
+        Get.offAllNamed('/');
+      }
+    } else {
+      if (authController.userData == null) {
+        await authController.getCurrentUserData();
+      }
+    }
+    await Future.delayed(const Duration(milliseconds: 100));
+    checking = false;
+    update();
   }
 }

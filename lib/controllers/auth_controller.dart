@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:infinityminer/models/app_model.dart';
 import 'package:infinityminer/helper/get_initial.dart';
-import 'package:infinityminer/view/screens/updated_screen.dart';
 import 'package:infinityminer/models/user_model.dart';
 
 class AuthController extends GetxController {
@@ -15,18 +14,28 @@ class AuthController extends GetxController {
       fNameController = TextEditingController(),
       lNameController = TextEditingController();
   UsersModel? userData;
-  bool loading = false, admin = false, sent = false, signIn = true;
+  bool loading = false,
+      admin = false,
+      sent = false,
+      signIn = true,
+      checking = true;
   AppModel appData = AppModel();
 
   checkUserAvailable() async {
+    await Future.delayed(const Duration(milliseconds: 100));
+
     var uid = getStorage.read('uid');
-    if (uid == null) {
-      Get.offAllNamed('/login');
-    } else {
+
+    Get.log(uid.toString());
+    if (uid != null) {
       if (userData == null) {
         await getCurrentUserData();
+        Get.offAllNamed('/home');
       }
     }
+    await Future.delayed(const Duration(milliseconds: 100));
+    checking = false;
+    update();
   }
 
   Future<UsersModel?> getUserData(uid) async {
@@ -125,7 +134,7 @@ class AuthController extends GetxController {
     if (firebaseAuth.currentUser != null) {
       firebaseAuth.signOut();
     }
-    Get.offAllNamed('/login');
+    Get.offAllNamed('/');
   }
 
   clearData() async {
@@ -157,17 +166,16 @@ class AuthController extends GetxController {
         .then((value) async {
       appData = AppModel.fromJson(value.data() as Map);
     }).onError((e, e1) {
-      Get.off(() => const UpdatedScreen());
+      // Get.off(() => const UpdatedScreen());
     });
     if (!appData.server) {
-      Get.off(() => const UpdatedScreen());
+      // Get.off(() => const UpdatedScreen());
       return;
     }
 
     var uid = getStorage.read('uid');
-
     if (uid == null) {
-      Get.offAllNamed('/login');
+      Get.offAllNamed('/');
     } else {
       admin = appData.admins!.contains(uid);
 
@@ -175,7 +183,7 @@ class AuthController extends GetxController {
         Get.offAllNamed('/admin');
       } else {
         await getCurrentUserData();
-        Get.offAllNamed('/user');
+        Get.offAllNamed('/home');
         updateUserStatus(true);
       }
     }
@@ -186,7 +194,7 @@ class AuthController extends GetxController {
   signingUpAuth() async {
     setLoading(true);
     try {
-      if (!emailController.text.contains('@')) {
+      if (!RegExp(r'\S+@\S+\.\S+').hasMatch(emailController.text)) {
         customDialog.customDialog(
           'error_occured'.tr,
           'please_enter_a_valid_email'.tr,
@@ -234,7 +242,7 @@ class AuthController extends GetxController {
           password: passwordController.text);
 
       await createUser();
-      navigator();
+      Get.offAllNamed('/home');
 
       TextInput.finishAutofillContext();
     } on FirebaseAuthException catch (e) {
@@ -309,7 +317,7 @@ class AuthController extends GetxController {
   }
 
   signingInAuth() async {
-    if (!emailController.text.contains('@')) {
+    if (!RegExp(r'\S+@\S+\.\S+').hasMatch(emailController.text)) {
       customDialog.customDialog(
         'error_occured'.tr,
         'please_enter_a_valid_email'.tr,

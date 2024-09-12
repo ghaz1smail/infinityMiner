@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infinityminer/helper/get_initial.dart';
 
 class CustomLoading extends StatelessWidget {
   const CustomLoading({super.key, this.size = 100});
@@ -6,6 +7,9 @@ class CustomLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CircularProgressIndicator());
+    return Center(
+        child: CircularProgressIndicator(
+      color: appTheme.primaryColor,
+    ));
   }
 }

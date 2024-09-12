@@ -39,7 +39,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           padding: const EdgeInsets.all(5),
           child: Text(
             widget.hint.tr,
-            style: const TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 12, color: Colors.white),
           ),
         ),
         SizedBox(
@@ -60,6 +60,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 widget.onSubmit!(w);
               }
             },
+            style: const TextStyle(color: Colors.white),
+            cursorColor: appTheme.primaryColor,
             autofillHints: widget.autofill,
             controller: widget.controller,
             keyboardType: widget.type,
@@ -68,31 +70,34 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 : null,
             obscureText: widget.secure ? showPass : false,
             decoration: InputDecoration(
-                counterText: "",
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                ),
-                suffixIcon: widget.secure && widget.controller!.text.isNotEmpty
-                    ? TextButton(
-                        onPressed: (() {
-                          setState(() {
-                            showPass = !showPass;
-                          });
-                        }),
-                        child: Text(showPass ? 'show'.tr : 'hide'.tr,
-                            style: TextStyle(color: appConstant.primaryColor)))
-                    : null,
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      10,
-                    ),
-                    borderSide:
-                        const BorderSide(width: 0.5, color: Colors.amber)),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      10,
-                    ),
-                    borderSide: const BorderSide(width: 0.5))),
+              counterText: "",
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 15,
+              ),
+              suffixIcon: widget.secure && widget.controller!.text.isNotEmpty
+                  ? TextButton(
+                      onPressed: (() {
+                        setState(() {
+                          showPass = !showPass;
+                        });
+                      }),
+                      child: Text(showPass ? 'show'.tr : 'hide'.tr,
+                          style: TextStyle(
+                              color: appTheme.primaryColor,
+                              fontWeight: FontWeight.bold)))
+                  : null,
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    10,
+                  ),
+                  borderSide: const BorderSide(color: Colors.white)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    10,
+                  ),
+                  borderSide:
+                      BorderSide(color: appTheme.primaryColor, width: 2)),
+            ),
           ),
         ),
       ],

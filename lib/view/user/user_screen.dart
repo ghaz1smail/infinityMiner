@@ -1,112 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinityminer/controllers/user_controller.dart';
 import 'package:infinityminer/helper/get_initial.dart';
+import 'package:infinityminer/view/user/contact_us/contact_us_screen.dart';
+import 'package:infinityminer/view/user/custom_app_bar.dart';
+import 'package:infinityminer/view/user/devices/mining_devices_screen.dart';
 import 'package:infinityminer/view/user/drawer_menu.dart';
+import 'package:infinityminer/view/user/home/home_screen.dart';
+import 'package:infinityminer/view/user/mine/mine_screen.dart';
+import 'package:infinityminer/view/user/profile/profile_screen.dart';
+import 'package:infinityminer/view/user/wallet/wallet_screen.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
 
-class UserScreen extends StatefulWidget {
+class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
-
-  @override
-  State<UserScreen> createState() => _UserScreenState();
-}
-
-class _UserScreenState extends State<UserScreen> {
-  @override
-  void initState() {
-    userController.checkingUser();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: TextButton(
-            onPressed: () {},
-            child: Text(
-              'app_name'.tr,
-              style: const TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.bold),
-            ),
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          actions: isMobile
-              ? [
-                  Builder(
-                    builder: (context) => IconButton(
-                        onPressed: () {
-                          Scaffold.of(context).openEndDrawer();
-                        },
-                        icon: const Icon(
-                          Icons.menu,
-                          color: Colors.black,
-                        )),
-                  )
-                ]
-              : [
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'mining_devices'.tr,
-                      style: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'wallet'.tr,
-                      style: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'mine'.tr,
-                      style: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'contact_us'.tr,
-                      style: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        authController.logOut();
-                      },
-                      icon: const Icon(
-                        Icons.logout,
-                        color: Colors.black,
-                      ))
-                ],
-        ),
+        appBar: const CustomAppBar(),
         endDrawer: isMobile ? const DrawerMenu() : null,
-        body: Obx(
-          () => userController.checking.value
-              ? const CustomLoading()
-              : SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        // height: 400,
-                        child: Image.asset(
-                          assets.homeWall,
-                          width: Get.width,
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ),
+        body: GetBuilder(
+          initState: (state) {
+            userController.checkUserRoute(fromPath: '/home');
+          },
+          init: UserController(),
+          builder: (controller) {
+            return controller.checking
+                ? const CustomLoading()
+                : IndexedStack(
+                    index: controller.selectedIndex.value,
+                    children: const [
+                      HomeScreen(),
+                      MiningDevicesScreen(),
+                      WalletScreen(),
+                      MineScreen(),
+                      ContactUsScreen(),
+                      ProfileScreen()
                     ],
-                  ),
-                ),
+                  );
+          },
         ));
   }
 }

@@ -40,7 +40,7 @@ class CustomButton extends StatelessWidget {
         color: fill ? color : Colors.white,
         shape: RoundedRectangleBorder(
             side: BorderSide(
-              color: fill ? Colors.transparent : appConstant.primaryColor,
+              color: fill ? Colors.transparent : appTheme.primaryColor,
             ),
             borderRadius: BorderRadius.all(Radius.circular(raduis))),
         child: loading

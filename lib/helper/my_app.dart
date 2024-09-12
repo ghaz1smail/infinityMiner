@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinityminer/helper/get_initial.dart';
 import 'package:infinityminer/helper/languages.dart';
-import 'package:infinityminer/helper/routes.dart';
+import 'package:infinityminer/app/app_routes.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -21,10 +21,11 @@ class MyApp extends StatelessWidget {
             child: child!,
           );
         },
-        getPages: Routes().pagesRoutes,
+        defaultTransition: Transition.fade,
+        getPages: AppRoutes().pagesRoutes,
         locale: const Locale('en'),
         translations: Languages(),
-        theme: appConstant.theme,
+        theme: appTheme.theme,
         debugShowCheckedModeBanner: false,
       ),
     );

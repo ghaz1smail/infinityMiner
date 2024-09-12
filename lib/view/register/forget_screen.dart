@@ -26,8 +26,7 @@ class ForgetScreen extends StatelessWidget {
                     decoration: isMobile
                         ? null
                         : BoxDecoration(
-                            border:
-                                Border.all(width: 0.5, color: Colors.black45),
+                            border: Border.all(width: 0.5, color: Colors.white),
                             borderRadius: BorderRadius.circular(10)),
                     width: isMobile ? null : 400,
                     height: isMobile ? null : 600,
@@ -53,7 +52,7 @@ class ForgetScreen extends StatelessWidget {
                             function: () async {
                               controller.forgetingPassAuth();
                             },
-                            color: appConstant.primaryColor,
+                            color: appTheme.primaryColor,
                             raduis: 10,
                             size: 17,
                             width: Get.width,
@@ -62,13 +61,13 @@ class ForgetScreen extends StatelessWidget {
                         const Spacer(),
                         InkWell(
                           onTap: () {
-                            Get.offAllNamed('/login');
+                            Get.offAllNamed('/');
                           },
                           child: Text(
                             'back'.tr,
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
-                                color: appConstant.primaryColor),
+                                color: appTheme.primaryColor),
                           ),
                         )
                       ],

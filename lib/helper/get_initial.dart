@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:infinityminer/controllers/user_controller.dart';
-import 'package:infinityminer/helper/assets.dart';
-import 'package:infinityminer/helper/constant_data.dart';
+import 'package:infinityminer/app/app_theme.dart';
+import 'package:infinityminer/app/assets.dart';
+import 'package:infinityminer/app/app_data.dart';
 import 'package:infinityminer/controllers/auth_controller.dart';
 import 'package:infinityminer/view/widgets/custom_dialog.dart';
 import 'package:infinityminer/helper/custom_formats.dart';
 import 'package:infinityminer/helper/firebase_options.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 bool isMobile = Get.width < 475;
 
@@ -24,14 +26,16 @@ class GetInitial {
     Get.put(AuthController());
     Get.put(UserController());
     await GetStorage.init();
+    setPathUrlStrategy();
   }
 }
 
 FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-AppConstant appConstant = AppConstant();
+AppData appData = AppData();
 Assets assets = Assets();
+AppTheme appTheme = AppTheme();
 GetStorage getStorage = GetStorage();
 CustomDialog customDialog = CustomDialog();
 CustomFormats customFormats = CustomFormats();
