@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinityminer/view/widgets/cached_network_image.dart';
+import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
 
 class MiningDevicesScreen extends StatelessWidget {
   const MiningDevicesScreen({super.key});
@@ -7,23 +8,24 @@ class MiningDevicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+        body: CustomScrollBar(
+      child: GridView.builder(
         padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            childAspectRatio: 1,
-          ),
-          itemCount: devices.length,
-          itemBuilder: (context, index) {
-            final device = devices[index];
-            return _buildDeviceTile(device);
-          },
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+          childAspectRatio: 1,
         ),
+        itemCount: devices.length,
+        itemBuilder: (context, index) {
+          final device = devices[index];
+          return _buildDeviceTile(device);
+        },
       ),
-    );
+    ));
   }
 
   Widget _buildDeviceTile(Device device) {

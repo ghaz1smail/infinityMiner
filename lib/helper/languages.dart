@@ -37,6 +37,14 @@ class Languages extends Translations {
           'profile': 'Profile',
           'about_us': 'About US',
           'contact_us': 'Contact US',
+          'log_out': 'Log out',
+          'attach_file': 'Attach file',
+          'message': 'Message',
+          'please_enter_your_message': 'Please enter your message',
+          'send_message': 'Send Message',
+          'we_would_love_to_hear_from_you': 'We would love to hear from you!',
+          'unlock_the_future_of_crypto_mining_rent_virual_mining_devices_today':
+              'Unlock the Future of Crypto Mining:\nRent Virual Mining Devices Today',
         },
       };
 }

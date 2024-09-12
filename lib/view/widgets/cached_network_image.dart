@@ -39,6 +39,8 @@ class CustomImageNetwork extends StatelessWidget {
       maxWidthDiskCache: cacheWidth,
       maxHeightDiskCache: cacheHeight,
       imageUrl: url,
+      width: width,
+      height: height,
       imageBuilder: (context, imageProvider) {
         return Container(
           decoration: BoxDecoration(

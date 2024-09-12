@@ -43,18 +43,18 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              'John Doe',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+              authController.userData!.name,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 10),
             Text(
-              'john.doe@example.com',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.white70,
-                  ),
+              authController.userData!.email,
+              style: const TextStyle(
+                color: Colors.white70,
+              ),
             ),
             const SizedBox(height: 30),
             ElevatedButton(
@@ -63,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Colors.blueAccent, // Text color
+                backgroundColor: Colors.blueAccent,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 shape: RoundedRectangleBorder(
