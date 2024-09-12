@@ -45,6 +45,8 @@ class Languages extends Translations {
           'we_would_love_to_hear_from_you': 'We would love to hear from you!',
           'unlock_the_future_of_crypto_mining_rent_virual_mining_devices_today':
               'Unlock the Future of Crypto Mining:\nRent Virual Mining Devices Today',
+          'sorry': 'Sorry :(',
+          'user_not_found': 'User not found',
         },
       };
 }

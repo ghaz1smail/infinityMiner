@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,8 +21,9 @@ class AuthController extends GetxController {
       signIn = true,
       checking = true;
   AppModel appData = AppModel();
+  String? referCode;
 
-  checkUserAvailable() async {
+  checkUserAvailable({bool goHome = true}) async {
     await Future.delayed(const Duration(milliseconds: 100));
 
     var uid = getStorage.read('uid');
@@ -30,7 +32,9 @@ class AuthController extends GetxController {
     if (uid != null) {
       if (userData == null) {
         await getCurrentUserData();
-        Get.offAllNamed('/home');
+        if (goHome) {
+          Get.offAllNamed('/home');
+        }
       }
     }
     await Future.delayed(const Duration(milliseconds: 100));
@@ -168,10 +172,10 @@ class AuthController extends GetxController {
     }).onError((e, e1) {
       // Get.off(() => const UpdatedScreen());
     });
-    if (!appData.server) {
-      // Get.off(() => const UpdatedScreen());
-      return;
-    }
+    // if (!appData.server) {
+    // Get.off(() => const UpdatedScreen());
+    //   return;
+    // }
 
     var uid = getStorage.read('uid');
     if (uid == null) {
@@ -189,6 +193,31 @@ class AuthController extends GetxController {
     }
 
     clearData();
+  }
+
+  useReferCode() async {
+    if (userData!.codeIUse.isEmpty && referCode != null) {
+      await firestore
+          .collection('users')
+          .where('username', isEqualTo: referCode)
+          .get()
+          .then((t) async {
+        if (t.docs.isNotEmpty) {
+          userData = UsersModel.fromJson(t.docs.first.data());
+          if (userData != null) {
+            await firestore.collection('users').doc(userData!.uid).update({
+              'userUsingCode':
+                  FieldValue.arrayUnion([authController.userData!.uid])
+            });
+            await firestore
+                .collection('users')
+                .doc(authController.userData!.uid)
+                .update({'codeIUse': userData!.uid});
+          }
+        }
+      });
+      referCode = null;
+    }
   }
 
   signingUpAuth() async {
@@ -242,6 +271,7 @@ class AuthController extends GetxController {
           password: passwordController.text);
 
       await createUser();
+      useReferCode();
       Get.offAllNamed('/home');
 
       TextInput.finishAutofillContext();
@@ -353,6 +383,7 @@ class AuthController extends GetxController {
           password: passwordController.text);
       getStorage.write('uid', firebaseAuth.currentUser!.uid);
       await navigator();
+      useReferCode();
       updateUserStatus(true);
     } on FirebaseAuthException catch (e) {
       setLoading(false);

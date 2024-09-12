@@ -21,6 +21,8 @@ class UsersModel {
   bool online;
   bool verified;
   List? tags;
+  List? userUsingCode;
+  String codeIUse;
 
   UsersModel({
     this.username = '',
@@ -45,6 +47,8 @@ class UsersModel {
     this.verified = false,
     this.online = false,
     this.tags,
+    this.userUsingCode,
+    this.codeIUse = '',
   });
 
   Map<String, dynamic> toJson() {
@@ -70,6 +74,8 @@ class UsersModel {
       'deleted': deleted,
       'timestamp': timestamp,
       'tags': tags,
+      'userUsingCode': userUsingCode,
+      'codeIUse': codeIUse,
     };
   }
 
@@ -98,6 +104,8 @@ class UsersModel {
       deleted: json['deleted'] ?? false,
       timestamp: json['timestamp'] ?? '',
       tags: json['tags'] ?? [],
+      codeIUse: json['codeIUse'] ?? '',
+      userUsingCode: json['userUsingCode'] ?? [],
     );
   }
 }

@@ -589,6 +589,7 @@ file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib/src/http_da
 file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib/src/media_type.dart
 file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib/src/scan.dart
 file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib/src/utils.dart
+file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/image_picker-1.1.2/lib/image_picker.dart
 file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/image_picker_for_web-3.0.5/lib/image_picker_for_web.dart
 file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/image_picker_for_web-3.0.5/lib/src/image_resizer.dart
 file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/image_picker_for_web-3.0.5/lib/src/image_resizer_utils.dart
@@ -1468,10 +1469,10 @@ file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/.dart_tool/flutter_bu
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/.dart_tool/flutter_build/5a39e6ce629b58664072718a440a0c0c/web_plugin_registrant.dart
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/.dart_tool/package_config.json
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/admin/admin_acreen.dart
+file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/app/app_assets.dart
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/app/app_data.dart
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/app/app_routes.dart
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/app/app_theme.dart
-file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/app/assets.dart
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/controllers/auth_controller.dart
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/controllers/user_controller.dart
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/helper/custom_formats.dart
@@ -1497,6 +1498,7 @@ file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/view/widgets/cach
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/view/widgets/custom_button.dart
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/view/widgets/custom_dialog.dart
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/view/widgets/custom_loading.dart
+file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/view/widgets/custom_scroll_bar.dart
 file:///Users/gh0zi0/Desktop/Projects/GitHub/infinityMiner/lib/view/widgets/custom_text_field.dart
 file:///Users/gh0zi0/FlutterDev/flutter/bin/cache/flutter_web_sdk/kernel/dart2js_platform.dill
 file:///Users/gh0zi0/FlutterDev/flutter/packages/flutter/lib/animation.dart
