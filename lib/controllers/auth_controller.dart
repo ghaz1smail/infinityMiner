@@ -24,20 +24,18 @@ class AuthController extends GetxController {
   String? referCode;
 
   checkUserAvailable({bool goHome = true}) async {
-    await Future.delayed(const Duration(milliseconds: 100));
-
+    await Future.delayed(const Duration(milliseconds: 50));
     var uid = getStorage.read('uid');
-
     Get.log(uid.toString());
     if (uid != null) {
       if (userData == null) {
         await getCurrentUserData();
-        if (goHome) {
-          Get.offAllNamed('/home');
-        }
+      }
+      if (goHome) {
+        Get.offAllNamed('/home');
       }
     }
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 50));
     checking = false;
     update();
   }
@@ -51,10 +49,6 @@ class AuthController extends GetxController {
       }
     });
     return null;
-  }
-
-  sendVerify() {
-    firebaseAuth.currentUser!.sendEmailVerification();
   }
 
   changeMode() {
@@ -149,17 +143,16 @@ class AuthController extends GetxController {
   }
 
   getCurrentUserData() async {
-    await firestore
-        .collection('users')
-        .doc(firebaseAuth.currentUser!.uid)
-        .get()
-        .then((value) async {
-      if (value.exists) {
-        userData = UsersModel.fromJson(value.data() as Map);
-      } else {
-        await logOut();
-      }
-    });
+    var uid = getStorage.read('uid');
+    if (uid != null) {
+      await firestore.collection('users').doc(uid).get().then((value) async {
+        if (value.exists) {
+          userData = UsersModel.fromJson(value.data() as Map);
+        } else {
+          await logOut();
+        }
+      });
+    }
   }
 
   navigator() async {
@@ -169,29 +162,19 @@ class AuthController extends GetxController {
         .get()
         .then((value) async {
       appData = AppModel.fromJson(value.data() as Map);
-    }).onError((e, e1) {
-      // Get.off(() => const UpdatedScreen());
-    });
-    // if (!appData.server) {
-    // Get.off(() => const UpdatedScreen());
-    //   return;
-    // }
-
-    var uid = getStorage.read('uid');
-    if (uid == null) {
+    }).onError((e, e1) {});
+    await getCurrentUserData();
+    if (userData == null) {
       Get.offAllNamed('/');
     } else {
-      admin = appData.admins!.contains(uid);
-
+      admin = appData.admins!.contains(firebaseAuth.currentUser!.uid);
       if (admin) {
         Get.offAllNamed('/admin');
       } else {
-        await getCurrentUserData();
         Get.offAllNamed('/home');
         updateUserStatus(true);
       }
     }
-
     clearData();
   }
 
@@ -203,17 +186,16 @@ class AuthController extends GetxController {
           .get()
           .then((t) async {
         if (t.docs.isNotEmpty) {
-          userData = UsersModel.fromJson(t.docs.first.data());
-          if (userData != null) {
-            await firestore.collection('users').doc(userData!.uid).update({
-              'userUsingCode':
-                  FieldValue.arrayUnion([authController.userData!.uid])
-            });
-            await firestore
-                .collection('users')
-                .doc(authController.userData!.uid)
-                .update({'codeIUse': userData!.uid});
-          }
+          var user = UsersModel.fromJson(t.docs.first.data());
+
+          await firestore.collection('users').doc(user.uid).update({
+            'userUsingCode':
+                FieldValue.arrayUnion([authController.userData!.uid])
+          });
+          await firestore
+              .collection('users')
+              .doc(authController.userData!.uid)
+              .update({'codeIUse': user.uid});
         }
       });
       referCode = null;
@@ -325,13 +307,35 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<String> checkUserName(String username) async {
+    String theUsername = '';
+
+    while (theUsername.isEmpty) {
+      await firestore
+          .collection('users')
+          .where('username', isEqualTo: username)
+          .get()
+          .then((users) {
+        if (users.docs.isEmpty) {
+          theUsername = username;
+        } else {
+          username =
+              (fNameController.text.trim() + users.docs.length.toString());
+        }
+      });
+    }
+    return theUsername;
+  }
+
   createUser() async {
     getStorage.write('uid', firebaseAuth.currentUser!.uid);
     userData = UsersModel(
+      username: await checkUserName(fNameController.text.trim()),
       uid: firebaseAuth.currentUser!.uid,
       timestamp: DateTime.now().toIso8601String(),
       email: emailController.text.trim(),
       firstName: fNameController.text.trim(),
+      userUsingCode: [],
       type: 'user',
     )
       ..password = customFormats.encryptText(passwordController.text, "pass")

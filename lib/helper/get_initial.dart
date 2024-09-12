@@ -13,7 +13,6 @@ import 'package:infinityminer/controllers/auth_controller.dart';
 import 'package:infinityminer/view/widgets/custom_dialog.dart';
 import 'package:infinityminer/helper/custom_formats.dart';
 import 'package:infinityminer/helper/firebase_options.dart';
-import 'package:url_strategy/url_strategy.dart';
 
 bool isMobile = Get.width < 475;
 
@@ -26,7 +25,6 @@ class GetInitial {
     Get.put(AuthController());
     Get.put(UserController());
     await GetStorage.init();
-    setPathUrlStrategy();
   }
 }
 

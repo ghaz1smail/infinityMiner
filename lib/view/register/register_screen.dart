@@ -42,33 +42,38 @@ class RegisterScreen extends StatelessWidget {
                               children: [
                                 Image.asset(assets.logo,
                                     height: 100, width: 100),
-                                const SizedBox(
-                                  height: 20,
-                                ),
                                 if (!controller.signIn)
-                                  CustomTextField(
-                                    hint: 'name',
-                                    controller: controller.fNameController,
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 5, top: 20),
+                                    child: CustomTextField(
+                                      hint: 'name',
+                                      controller: controller.fNameController,
+                                      autofill: const [AutofillHints.email],
+                                      onSubmit: (w) {
+                                        controller.signingUpAuth();
+                                      },
+                                    ),
+                                  ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: CustomTextField(
+                                    hint: 'email',
+                                    controller: controller.emailController,
                                     autofill: const [AutofillHints.email],
                                     onSubmit: (w) {
-                                      controller.signingUpAuth();
+                                      if (controller.signIn) {
+                                        controller.signingInAuth();
+                                      } else {
+                                        controller.signingUpAuth();
+                                      }
                                     },
                                   ),
-                                CustomTextField(
-                                  hint: 'email',
-                                  controller: controller.emailController,
-                                  autofill: const [AutofillHints.email],
-                                  onSubmit: (w) {
-                                    if (controller.signIn) {
-                                      controller.signingInAuth();
-                                    } else {
-                                      controller.signingUpAuth();
-                                    }
-                                  },
                                 ),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
+                                      const EdgeInsets.symmetric(vertical: 5),
                                   child: CustomTextField(
                                     hint: 'password',
                                     secure: true,
@@ -108,7 +113,7 @@ class RegisterScreen extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 15),
                                     child: TextButton(
-                                        onPressed: () {
+                                        onPressed: () async {
                                           Get.offAllNamed('/fogot-password');
                                         },
                                         child: Text(

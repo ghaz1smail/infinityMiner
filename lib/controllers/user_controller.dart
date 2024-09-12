@@ -31,23 +31,23 @@ class UserController extends GetxController {
     checkUserRoute();
   }
 
-  checkUserRoute({fromPath = '/home'}) async {
+  checkUserRoute({bool updateData = true}) async {
     checking = true;
-    update();
+    if (updateData) {
+      update();
+    }
     await Future.delayed(const Duration(milliseconds: 100));
     var uid = getStorage.read('uid');
     Get.log(uid.toString());
-    if (uid == null) {
-      if (fromPath != '/') {
-        Get.offAllNamed('/');
-      }
-    } else {
+    if (uid != null) {
       if (authController.userData == null) {
         await authController.getCurrentUserData();
       }
+      await Future.delayed(const Duration(milliseconds: 100));
+      checking = false;
+      update();
+    } else {
+      Get.offAllNamed('/');
     }
-    await Future.delayed(const Duration(milliseconds: 100));
-    checking = false;
-    update();
   }
 }

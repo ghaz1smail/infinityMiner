@@ -20,15 +20,23 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
   UsersModel? userData;
 
   checkUserId() async {
+    await authController.getCurrentUserData();
     if (authController.userData != null) {
-      if (authController.userData!.codeIUse.isNotEmpty) {
-        type = 'already_have_using_code';
+      if (authController.userData!.username == userId.toString()) {
+        type = 'same_user';
+        setState(() {
+          loading = false;
+        });
         return;
       }
-    } else {
-      await authController.checkUserAvailable(goHome: false);
+      if (authController.userData!.codeIUse.isNotEmpty) {
+        type = 'already_have_using_code';
+        setState(() {
+          loading = false;
+        });
+        return;
+      }
     }
-
     await firestore
         .collection('users')
         .where('username', isEqualTo: userId)
@@ -36,7 +44,6 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
         .then((t) async {
       if (t.docs.isEmpty) {
         type = 'not_found';
-        return;
       } else {
         userData = UsersModel.fromJson(t.docs.first.data());
         if (userData != null) {
@@ -50,17 +57,15 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
                 .doc(authController.userData!.uid)
                 .update({'codeIUse': userData!.uid});
             type = 'success';
-            return;
           } else {
-            authController.changeMode();
             authController.referCode = userId.toString();
             Get.offAllNamed('/');
           }
         }
       }
-    });
-    setState(() {
-      loading = false;
+      setState(() {
+        loading = false;
+      });
     });
   }
 
@@ -107,7 +112,103 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
                     ],
                   ),
                 )
-              : Container(),
+              : type == 'success'
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'success'.tr,
+                            style: const TextStyle(
+                                fontSize: 50,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20, bottom: 50),
+                            child: Text(
+                              userId.toString(),
+                              style: const TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          CustomButton(
+                              title: 'back',
+                              function: () {
+                                Get.offAllNamed('/');
+                              },
+                              width: 100,
+                              color: appTheme.primaryColor)
+                        ],
+                      ),
+                    )
+                  : type == 'same_user'
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'opps'.tr,
+                                style: const TextStyle(
+                                    fontSize: 50,
+                                    color: Colors.deepOrange,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20, bottom: 50),
+                                child: Text(
+                                  'you_are_this_user'.tr,
+                                  style: const TextStyle(
+                                      fontSize: 30,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              CustomButton(
+                                  title: 'back',
+                                  function: () {
+                                    Get.offAllNamed('/');
+                                  },
+                                  width: 100,
+                                  color: appTheme.primaryColor)
+                            ],
+                          ),
+                        )
+                      : Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'opps'.tr,
+                                style: const TextStyle(
+                                    fontSize: 50,
+                                    color: Colors.deepOrange,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20, bottom: 50),
+                                child: Text(
+                                  'you_already_refer_to_another_code'.tr,
+                                  style: const TextStyle(
+                                      fontSize: 30,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              CustomButton(
+                                  title: 'back',
+                                  function: () {
+                                    Get.offAllNamed('/');
+                                  },
+                                  width: 100,
+                                  color: appTheme.primaryColor)
+                            ],
+                          ),
+                        ),
     );
   }
 }

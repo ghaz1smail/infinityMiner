@@ -22,7 +22,7 @@ class UserScreen extends StatelessWidget {
         endDrawer: isMobile ? const DrawerMenu() : null,
         body: GetBuilder(
           initState: (state) {
-            userController.checkUserRoute(fromPath: '/home');
+            userController.checkUserRoute(updateData: false);
           },
           init: UserController(),
           builder: (controller) {

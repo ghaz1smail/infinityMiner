@@ -18,12 +18,10 @@ class ContactUsScreen extends StatefulWidget {
 class _ContactUsScreenState extends State<ContactUsScreen> {
   String id = DateTime.now().millisecondsSinceEpoch.toString();
   XFile? attachFile;
-  String? imageUrl;
+  String imageUrl = '';
   final _formKey = GlobalKey<FormState>();
-  final _nameController =
-      TextEditingController(text: authController.userData!.name);
-  final _emailController =
-      TextEditingController(text: authController.userData!.email);
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _messageController = TextEditingController();
   bool loading = false;
 
@@ -33,14 +31,16 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         loading = true;
       });
 
-      while (!imageUrl!.startsWith('http')) {
-        try {
-          imageUrl = await firebaseStorage
-              .ref()
-              .child('contact/$id/${basename(attachFile!.path)}')
-              .getDownloadURL();
-        } catch (e) {
-          //
+      if (attachFile != null) {
+        while (!imageUrl.startsWith('http')) {
+          try {
+            imageUrl = await firebaseStorage
+                .ref()
+                .child('contact/$id/${basename(attachFile!.path)}')
+                .getDownloadURL();
+          } catch (e) {
+            //
+          }
         }
       }
 
@@ -50,7 +50,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         'email': _emailController.text,
         'uid': authController.userData!.uid,
         'id': id,
-        'attachFile': imageUrl ?? '',
+        'attachFile': imageUrl,
         'timestamp': DateTime.now().microsecondsSinceEpoch.toString()
       });
       _nameController.clear();
@@ -60,6 +60,13 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       setState(() {
         loading = false;
       });
+
+      Get.showSnackbar(GetSnackBar(
+        margin: const EdgeInsets.all(20),
+        message: 'thanks_for_your_message,we_will_reply_as_soon_as_possible'.tr,
+        duration: const Duration(seconds: 3),
+        borderRadius: 20,
+      ));
     }
   }
 
@@ -86,6 +93,15 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         imageUrl = await firebaseStorage.ref().child(filePath).getDownloadURL();
       });
     }
+  }
+
+  @override
+  void initState() {
+    if (authController.userData != null) {
+      _emailController.text = authController.userData!.email;
+      _nameController.text = authController.userData!.name;
+    }
+    super.initState();
   }
 
   @override
