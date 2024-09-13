@@ -64,17 +64,17 @@ class DrawerMenu extends StatelessWidget {
                   color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
-          ListTile(
-            onTap: () {
-              Get.back();
-              userController.changeSelectedIndex('/mine');
-            },
-            title: Text(
-              'mine'.tr,
-              style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ),
+          // ListTile(
+          //   onTap: () {
+          //     Get.back();
+          //     userController.changeSelectedIndex('/mine');
+          //   },
+          //   title: Text(
+          //     'mine'.tr,
+          //     style: const TextStyle(
+          //         color: Colors.white, fontWeight: FontWeight.bold),
+          //   ),
+          // ),
           ListTile(
             onTap: () {
               Get.back();

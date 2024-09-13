@@ -56,16 +56,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  userController.changeSelectedIndex('/mine');
-                },
-                child: Text(
-                  'mine'.tr,
-                  style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ),
+              // TextButton(
+              //   onPressed: () {
+              //     userController.changeSelectedIndex('/mine');
+              //   },
+              //   child: Text(
+              //     'mine'.tr,
+              //     style: const TextStyle(
+              //         color: Colors.white, fontWeight: FontWeight.bold),
+              //   ),
+              // ),
               TextButton(
                 onPressed: () {
                   userController.changeSelectedIndex('/contact-us');

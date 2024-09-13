@@ -1,4 +1,86 @@
+import 'package:infinityminer/models/device_model.dart';
+
 class AppData {
-  final RegExp isArabic =
-      RegExp(r'[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]');
+  List<DeviceModel> miningPlans = [
+    DeviceModel(
+      name: 'S90',
+      image: 's9',
+      subscriptionPrice: 49,
+      miningRateRange: '5~10',
+      powerConsumption: 900,
+      hashRate: 13,
+    ),
+    DeviceModel(
+      name: 'S170',
+      image: 's17',
+      subscriptionPrice: 99,
+      miningRateRange: '11~20',
+      powerConsumption: 1200,
+      hashRate: 20,
+    ),
+    DeviceModel(
+      name: 'T19',
+      image: 't19',
+      subscriptionPrice: 249,
+      miningRateRange: '16~25',
+      powerConsumption: 1500,
+      hashRate: 84,
+    ),
+    DeviceModel(
+      name: 'S19',
+      image: 's19',
+      subscriptionPrice: 499,
+      miningRateRange: '34~60',
+      powerConsumption: 2000,
+      hashRate: 95,
+    ),
+    DeviceModel(
+      name: 'S19 Pro',
+      image: 's19pro',
+      subscriptionPrice: 999,
+      miningRateRange: '65~250',
+      powerConsumption: 2500,
+      hashRate: 110,
+    ),
+    DeviceModel(
+      name: 'S19 XP',
+      image: 's19xp',
+      subscriptionPrice: 1499,
+      miningRateRange: '100~250',
+      powerConsumption: 3000,
+      hashRate: 140,
+    ),
+    DeviceModel(
+      name: 'M30S',
+      image: 'm30s',
+      subscriptionPrice: 2499,
+      miningRateRange: '150~500',
+      powerConsumption: 3400,
+      hashRate: 150,
+    ),
+    DeviceModel(
+      name: 'M30S+',
+      image: 'm30s+',
+      subscriptionPrice: 3999,
+      miningRateRange: '500~800',
+      powerConsumption: 3600,
+      hashRate: 175,
+    ),
+    DeviceModel(
+      name: 'M31S',
+      image: 'm31s',
+      subscriptionPrice: 4999,
+      miningRateRange: '450~1000',
+      powerConsumption: 3800,
+      hashRate: 203,
+    ),
+    DeviceModel(
+      name: 'S19j Pro',
+      image: 's19j',
+      subscriptionPrice: 9999,
+      miningRateRange: '700~2000',
+      powerConsumption: 4000,
+      hashRate: 225,
+    ),
+  ];
 }

@@ -7,7 +7,6 @@ import 'package:infinityminer/view/user/custom_app_bar.dart';
 import 'package:infinityminer/view/user/devices/mining_devices_screen.dart';
 import 'package:infinityminer/view/user/drawer_menu.dart';
 import 'package:infinityminer/view/user/home/home_screen.dart';
-import 'package:infinityminer/view/user/mine/mine_screen.dart';
 import 'package:infinityminer/view/user/profile/profile_screen.dart';
 import 'package:infinityminer/view/user/wallet/wallet_screen.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
@@ -34,7 +33,7 @@ class UserScreen extends StatelessWidget {
                       HomeScreen(),
                       MiningDevicesScreen(),
                       WalletScreen(),
-                      MineScreen(),
+                      // MineScreen(),
                       ContactUsScreen(),
                       ProfileScreen()
                     ],

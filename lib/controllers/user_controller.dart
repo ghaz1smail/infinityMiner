@@ -18,14 +18,14 @@ class UserController extends GetxController {
       case '/wallet':
         selectedIndex.value = 2;
         break;
-      case '/mine':
+      // case '/mine':
+      //   selectedIndex.value = 3;
+      //   break;
+      case '/contact-us':
         selectedIndex.value = 3;
         break;
-      case '/contact-us':
-        selectedIndex.value = 4;
-        break;
       case '/profile':
-        selectedIndex.value = 5;
+        selectedIndex.value = 4;
         break;
     }
     checkUserRoute();

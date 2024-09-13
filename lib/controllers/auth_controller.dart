@@ -23,14 +23,16 @@ class AuthController extends GetxController {
   AppModel appData = AppModel();
   String? referCode;
 
+  @override
+  void onInit() {
+    checkUserAvailable();
+    super.onInit();
+  }
+
   checkUserAvailable({bool goHome = true}) async {
-    await Future.delayed(const Duration(milliseconds: 50));
-    var uid = getStorage.read('uid');
-    Get.log(uid.toString());
-    if (uid != null) {
-      if (userData == null) {
-        await getCurrentUserData();
-      }
+    checking = true;
+    await getCurrentUserData();
+    if (userData != null) {
       if (goHome) {
         Get.offAllNamed('/home');
       }
@@ -163,16 +165,17 @@ class AuthController extends GetxController {
         .then((value) async {
       appData = AppModel.fromJson(value.data() as Map);
     }).onError((e, e1) {});
-    await getCurrentUserData();
+    admin = appData.admins!.contains(firebaseAuth.currentUser!.uid);
+    if (!admin) {
+      await getCurrentUserData();
+    }
     if (userData == null) {
       Get.offAllNamed('/');
     } else {
-      admin = appData.admins!.contains(firebaseAuth.currentUser!.uid);
       if (admin) {
         Get.offAllNamed('/admin');
       } else {
         Get.offAllNamed('/home');
-        updateUserStatus(true);
       }
     }
     clearData();
@@ -346,10 +349,6 @@ class AuthController extends GetxController {
         .set(userData!.toJson());
   }
 
-  updateUserStatus(bool x) {
-    firestore.collection('users').doc(userData!.uid).update({'online': x});
-  }
-
   signingInAuth() async {
     if (!RegExp(r'\S+@\S+\.\S+').hasMatch(emailController.text)) {
       customDialog.customDialog(
@@ -388,7 +387,6 @@ class AuthController extends GetxController {
       getStorage.write('uid', firebaseAuth.currentUser!.uid);
       await navigator();
       useReferCode();
-      updateUserStatus(true);
     } on FirebaseAuthException catch (e) {
       setLoading(false);
 

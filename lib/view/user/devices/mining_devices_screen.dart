@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:infinityminer/helper/get_initial.dart';
+import 'package:infinityminer/models/device_model.dart';
 import 'package:infinityminer/view/widgets/cached_network_image.dart';
 import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
 
@@ -19,16 +21,16 @@ class MiningDevicesScreen extends StatelessWidget {
           mainAxisSpacing: 8,
           childAspectRatio: 1,
         ),
-        itemCount: devices.length,
+        itemCount: appData.miningPlans.length,
         itemBuilder: (context, index) {
-          final device = devices[index];
+          final device = appData.miningPlans[index];
           return _buildDeviceTile(device);
         },
       ),
     ));
   }
 
-  Widget _buildDeviceTile(Device device) {
+  Widget _buildDeviceTile(DeviceModel device) {
     return Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +43,7 @@ class MiningDevicesScreen extends StatelessWidget {
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(8)),
                   child: CustomImageNetwork(
-                    url: device.imagePath,
+                    url: 'assets/images/devices/${device.image}.png',
                     width: 100,
                     height: 100,
                     boxFit: BoxFit.cover,
@@ -62,7 +64,7 @@ class MiningDevicesScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
             child: Text(
-              '\$${device.price}',
+              '\$${device.subscriptionPrice}',
               style: const TextStyle(
                 color: Colors.greenAccent,
                 fontWeight: FontWeight.bold,
@@ -76,25 +78,3 @@ class MiningDevicesScreen extends StatelessWidget {
     );
   }
 }
-
-class Device {
-  final String imagePath;
-  final String name;
-  final double price;
-
-  Device({
-    required this.imagePath,
-    required this.name,
-    required this.price,
-  });
-}
-
-final List<Device> devices = List.generate(
-  10,
-  (index) => Device(
-    imagePath:
-        'https://m.media-amazon.com/images/I/618j3ClyifL._AC_UF1000,1000_QL80_.jpg',
-    name: 'Device ${index + 1}',
-    price: 100 + index * 50.0,
-  ),
-);
