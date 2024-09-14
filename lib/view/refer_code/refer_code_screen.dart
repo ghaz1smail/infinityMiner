@@ -17,7 +17,7 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
   final userId = Get.parameters['userId'];
   bool loading = true;
   String type = '';
-  UsersModel? userData;
+  UserModel? userData;
 
   checkUserId() async {
     await authController.getCurrentUserData();
@@ -45,7 +45,7 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
       if (t.docs.isEmpty) {
         type = 'not_found';
       } else {
-        userData = UsersModel.fromJson(t.docs.first.data());
+        userData = UserModel.fromJson(t.docs.first.data());
         if (userData != null) {
           if (authController.userData != null) {
             await firestore.collection('users').doc(userData!.uid).update({

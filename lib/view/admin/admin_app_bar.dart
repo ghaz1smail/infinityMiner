@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinityminer/helper/get_initial.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const AdminAppBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -37,9 +37,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ]
           : [
               TextButton(
-                onPressed: () {
-                  userController.changeSelectedIndex('/mining-devices');
-                },
+                onPressed: () {},
                 child: Text(
                   'mining_devices'.tr,
                   style: const TextStyle(
@@ -47,9 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
               TextButton(
-                onPressed: () {
-                  userController.changeSelectedIndex('/wallet');
-                },
+                onPressed: () {},
                 child: Text(
                   'wallet'.tr,
                   style: const TextStyle(
@@ -57,9 +53,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
               TextButton(
-                onPressed: () {
-                  userController.changeSelectedIndex('/contact-us');
-                },
+                onPressed: () {},
                 child: Text(
                   'contact_us'.tr,
                   style: const TextStyle(
@@ -70,7 +64,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: GestureDetector(
                   onTap: () {
-                    userController.changeSelectedIndex('/profile');
+                    authController.logOut();
                   },
                   child: CircleAvatar(
                     radius: 15,

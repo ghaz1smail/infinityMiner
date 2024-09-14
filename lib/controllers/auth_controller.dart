@@ -14,12 +14,8 @@ class AuthController extends GetxController {
       passwordController = TextEditingController(),
       fNameController = TextEditingController(),
       lNameController = TextEditingController();
-  UsersModel? userData;
-  bool loading = false,
-      admin = false,
-      sent = false,
-      signIn = true,
-      checking = true;
+  UserModel? userData;
+  bool loading = false, signIn = true, checking = true;
   AppModel appData = AppModel();
   String? referCode;
 
@@ -29,23 +25,28 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
+  //admin@infinityminer.net
+
   checkUserAvailable({bool goHome = true}) async {
     checking = true;
     await getCurrentUserData();
     if (userData != null) {
       if (goHome) {
-        Get.offAllNamed('/home');
+        if (userData!.type == 'admin') {
+          await Get.offAllNamed('/admin');
+        } else {
+          await Get.offAllNamed('/home');
+        }
       }
     }
-    await Future.delayed(const Duration(milliseconds: 50));
     checking = false;
     update();
   }
 
-  Future<UsersModel?> getUserData(uid) async {
+  Future<UserModel?> getUserData(uid) async {
     await firestore.collection('users').doc(uid).get().then((value) {
       if (value.exists) {
-        return UsersModel.fromJson(value.data() as Map);
+        return UserModel.fromJson(value.data() as Map);
       } else {
         return null;
       }
@@ -128,12 +129,8 @@ class AuthController extends GetxController {
   }
 
   logOut() async {
-    admin = false;
     userData = null;
     getStorage.remove('uid');
-    if (firebaseAuth.currentUser != null) {
-      firebaseAuth.signOut();
-    }
     Get.offAllNamed('/');
   }
 
@@ -149,7 +146,7 @@ class AuthController extends GetxController {
     if (uid != null) {
       await firestore.collection('users').doc(uid).get().then((value) async {
         if (value.exists) {
-          userData = UsersModel.fromJson(value.data() as Map);
+          userData = UserModel.fromJson(value.data() as Map);
         } else {
           await logOut();
         }
@@ -165,17 +162,17 @@ class AuthController extends GetxController {
         .then((value) async {
       appData = AppModel.fromJson(value.data() as Map);
     }).onError((e, e1) {});
-    admin = appData.admins!.contains(firebaseAuth.currentUser!.uid);
-    if (!admin) {
-      await getCurrentUserData();
-    }
+
+    await getCurrentUserData();
+
     if (userData == null) {
       Get.offAllNamed('/');
     } else {
-      if (admin) {
+      if (userData!.type == 'admin') {
         Get.offAllNamed('/admin');
       } else {
         Get.offAllNamed('/home');
+        useReferCode();
       }
     }
     clearData();
@@ -189,7 +186,7 @@ class AuthController extends GetxController {
           .get()
           .then((t) async {
         if (t.docs.isNotEmpty) {
-          var user = UsersModel.fromJson(t.docs.first.data());
+          var user = UserModel.fromJson(t.docs.first.data());
 
           await firestore.collection('users').doc(user.uid).update({
             'userUsingCode':
@@ -332,7 +329,7 @@ class AuthController extends GetxController {
 
   createUser() async {
     getStorage.write('uid', firebaseAuth.currentUser!.uid);
-    userData = UsersModel(
+    userData = UserModel(
       username: await checkUserName(fNameController.text.trim()),
       uid: firebaseAuth.currentUser!.uid,
       timestamp: DateTime.now().toIso8601String(),
@@ -386,7 +383,6 @@ class AuthController extends GetxController {
           password: passwordController.text);
       getStorage.write('uid', firebaseAuth.currentUser!.uid);
       await navigator();
-      useReferCode();
     } on FirebaseAuthException catch (e) {
       setLoading(false);
 

@@ -18,9 +18,7 @@ class UserController extends GetxController {
       case '/wallet':
         selectedIndex.value = 2;
         break;
-      // case '/mine':
-      //   selectedIndex.value = 3;
-      //   break;
+
       case '/contact-us':
         selectedIndex.value = 3;
         break;
@@ -40,12 +38,13 @@ class UserController extends GetxController {
     var uid = getStorage.read('uid');
     Get.log(uid.toString());
     if (uid != null) {
-      if (authController.userData == null) {
-        await authController.getCurrentUserData();
+      await authController.getCurrentUserData();
+      if (authController.userData!.type == 'admin') {
+        Get.offAllNamed('/admin');
+      } else {
+        checking = false;
+        update();
       }
-      await Future.delayed(const Duration(milliseconds: 100));
-      checking = false;
-      update();
     } else {
       Get.offAllNamed('/');
     }

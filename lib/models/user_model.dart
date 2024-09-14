@@ -1,4 +1,4 @@
-class UsersModel {
+class UserModel {
   String username;
   String gender;
   String name;
@@ -24,7 +24,7 @@ class UsersModel {
   List? userUsingCode;
   String codeIUse;
 
-  UsersModel({
+  UserModel({
     this.username = '',
     this.gender = 'male',
     this.email = '',
@@ -79,10 +79,10 @@ class UsersModel {
     };
   }
 
-  factory UsersModel.fromJson(Map<dynamic, dynamic> json) {
+  factory UserModel.fromJson(Map<dynamic, dynamic> json) {
     var f = json['firstName'] ?? '';
     var l = json['lastName'] ?? '';
-    return UsersModel(
+    return UserModel(
       username: json['username'] ?? '',
       gender: json['gender'] ?? '',
       email: json['email'] ?? '',
@@ -94,7 +94,7 @@ class UsersModel {
       bio: json['bio'] ?? '',
       birth: json['birth'] ?? '',
       cover: json['cover'] ?? '',
-      type: json['type'] ?? '',
+      type: json['type'] ?? 'user',
       uid: json['uid'] ?? '',
       phone: json['phone'] ?? '',
       ios: json['ios'] ?? false,
