@@ -10,11 +10,9 @@ import 'package:infinityminer/app/app_theme.dart';
 import 'package:infinityminer/app/app_assets.dart';
 import 'package:infinityminer/app/app_data.dart';
 import 'package:infinityminer/controllers/auth_controller.dart';
-import 'package:infinityminer/view/widgets/custom_dialog.dart';
+import 'package:infinityminer/helper/custom_ui.dart';
 import 'package:infinityminer/helper/custom_formats.dart';
 import 'package:infinityminer/helper/firebase_options.dart';
-
-bool isMobile = Get.width < 475;
 
 class GetInitial {
   initialApp() async {
@@ -35,8 +33,8 @@ AppData appData = AppData();
 AppAssets assets = AppAssets();
 AppTheme appTheme = AppTheme();
 GetStorage getStorage = GetStorage();
-CustomDialog customDialog = CustomDialog();
 CustomFormats customFormats = CustomFormats();
+CustomUi customUi = CustomUi();
 AuthController authController = Get.find<AuthController>();
 UserController userController = Get.find<UserController>();
 

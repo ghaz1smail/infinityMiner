@@ -9,43 +9,22 @@ class WalletScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.grey[900],
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.8),
-                  spreadRadius: 5,
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
+        children: [
+          Text(
+            'Wallet Balance',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Wallet Balance',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            '\$5,420.75',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.greenAccent,
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  '\$5,420.75',
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.greenAccent,
-                      ),
-                ),
-              ],
-            ),
           ),
           const SizedBox(height: 20),
-          // Recent Transactions
           Text(
             'Recent Transactions',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -78,22 +57,6 @@ class WalletScreen extends StatelessWidget {
                   color: Colors.redAccent,
                 ),
               ],
-            ),
-          ),
-          const SizedBox(height: 20),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.blueAccent,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              child: const Text('Add Funds'),
             ),
           ),
         ],

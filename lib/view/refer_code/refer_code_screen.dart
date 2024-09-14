@@ -96,6 +96,7 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
                         padding: const EdgeInsets.only(top: 20, bottom: 50),
                         child: Text(
                           'user_not_found'.tr,
+                          textAlign: TextAlign.center,
                           style: const TextStyle(
                               fontSize: 30,
                               color: Colors.white,
@@ -119,6 +120,7 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
                         children: [
                           Text(
                             'success'.tr,
+                            textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: 50,
                                 color: Colors.green,
@@ -151,6 +153,7 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
                             children: [
                               Text(
                                 'opps'.tr,
+                                textAlign: TextAlign.center,
                                 style: const TextStyle(
                                     fontSize: 50,
                                     color: Colors.deepOrange,
@@ -161,6 +164,7 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
                                     const EdgeInsets.only(top: 20, bottom: 50),
                                 child: Text(
                                   'you_are_this_user'.tr,
+                                  textAlign: TextAlign.center,
                                   style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.white,
@@ -183,6 +187,7 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
                             children: [
                               Text(
                                 'opps'.tr,
+                                textAlign: TextAlign.center,
                                 style: const TextStyle(
                                     fontSize: 50,
                                     color: Colors.deepOrange,
@@ -193,6 +198,7 @@ class _ReferCodeScreenState extends State<ReferCodeScreen> {
                                     const EdgeInsets.only(top: 20, bottom: 50),
                                 child: Text(
                                   'you_already_refer_to_another_code'.tr,
+                                  textAlign: TextAlign.center,
                                   style: const TextStyle(
                                       fontSize: 30,
                                       color: Colors.white,

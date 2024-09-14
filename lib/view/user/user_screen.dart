@@ -16,6 +16,8 @@ class UserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = Get.width < 475;
+
     return Scaffold(
         appBar: const CustomAppBar(),
         endDrawer: isMobile ? const DrawerMenu() : null,
@@ -33,7 +35,6 @@ class UserScreen extends StatelessWidget {
                       HomeScreen(),
                       MiningDevicesScreen(),
                       WalletScreen(),
-                      // MineScreen(),
                       ContactUsScreen(),
                       ProfileScreen()
                     ],

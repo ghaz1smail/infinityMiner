@@ -12,6 +12,8 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = Get.width < 475;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: GetBuilder(

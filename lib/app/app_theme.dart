@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   Color primaryColor = const Color(0xff1A4D2E),
-      secondory = const Color(0xffFF9F29),
-      secondryColor = Colors.black;
+      secondoryColor = const Color(0xffFF9F29),
+      backgroundColor = Colors.black;
 
   ThemeData theme = ThemeData(
       useMaterial3: false,

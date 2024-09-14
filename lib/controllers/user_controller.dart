@@ -1,11 +1,36 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:infinityminer/helper/get_initial.dart';
+import 'package:http/http.dart' as http;
 
 class UserController extends GetxController {
   var getStorage = GetStorage();
   RxInt selectedIndex = 0.obs;
   bool checking = true;
+  RxString bitCoinPrice = ''.obs;
+
+  getBitCoinPrice() async {
+    var headers = {
+      'Cookie':
+          '__cf_bm=npAQJ4N_UOj9xx3372xPxNYC_JD_CAeAxzCdD6PDq4I-1726347504-1.0.1.1-YBqotiw3ywnbBeGUXcq6Fo5.zevF1KtXIvYmweakL.kh6wopJSsYyHgIFamijxG1N.8S0O1Vv4IhoFxM8D5z9g'
+    };
+    var request = http.Request('GET',
+        Uri.parse('https://api.coinbase.com/v2/exchange-rates?currency=BTC'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var body = await response.stream.bytesToString();
+
+      var rates = jsonDecode(body)['data']['rates'];
+      bitCoinPrice.value = rates['USD'];
+      update();
+    }
+  }
 
   changeSelectedIndex(String path) {
     switch (path) {

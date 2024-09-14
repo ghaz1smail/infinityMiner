@@ -15,6 +15,8 @@ class ForgetScreen extends StatelessWidget {
         body: GetBuilder(
       init: AuthController(),
       builder: (controller) {
+        bool isMobile = Get.width < 475;
+
         return CustomScrollBar(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

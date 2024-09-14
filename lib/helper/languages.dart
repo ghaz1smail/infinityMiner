@@ -53,6 +53,18 @@ class Languages extends Translations {
               'You already refer to another code',
           'you_are_this_user': 'You are this user!',
           'start': 'Start',
+          'buy': 'Buy',
+          'submit': 'Submit',
+          'mining_rate': 'Mining rate',
+          'bitcoin_price': 'Bitcoin Price',
+          'text_copied_to_clipboard': 'Text copied to clipboard',
+          'please_transfer': 'Please transfer',
+          'please_pick_an_attach_of_your_transfer':
+              'Please pick an attach of your transfer',
+          'thanks_for_your_request_and_we_will_check_it_and_response_in_48_hours':
+              'Thanks for your request and we will check it and response in 48 hours',
+          'to_this_wallet_address_then_attach_the_transfer_image':
+              'To this wallet address then attach the transfer image',
           'thanks_for_your_message,we_will_reply_as_soon_as_possible':
               'Thaks for your message, we will reply as soon as possible',
           'about-us':

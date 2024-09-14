@@ -5,8 +5,19 @@ import 'package:infinityminer/helper/get_initial.dart';
 import 'package:infinityminer/view/widgets/custom_button.dart';
 import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    userController.getBitCoinPrice();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +59,19 @@ class HomeScreen extends StatelessWidget {
                         userController.changeSelectedIndex('/mining-devices');
                       },
                       width: 200,
-                      color: appTheme.primaryColor)
+                      color: appTheme.primaryColor),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 100),
+                    child: Obx(() => Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                              '${'bitcoin_price'.tr}: ${userController.bitCoinPrice.value}\$',
+                              style: const TextStyle(fontSize: 30),
+                            ),
+                          ),
+                        )),
+                  )
                 ],
               ),
             )

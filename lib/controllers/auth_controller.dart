@@ -16,7 +16,7 @@ class AuthController extends GetxController {
       lNameController = TextEditingController();
   UserModel? userData;
   bool loading = false, signIn = true, checking = true;
-  AppModel appData = AppModel();
+  AppModel? appData;
   String? referCode;
 
   @override
@@ -61,7 +61,7 @@ class AuthController extends GetxController {
 
   forgetingPassAuth() async {
     if (!emailController.text.contains('@')) {
-      customDialog.customDialog(
+      customUi.alertDialog(
         'error_occured'.tr,
         'please_enter_a_valid_email'.tr,
         {},
@@ -83,7 +83,7 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'email-already-in-use':
-          customDialog.customDialog(
+          customUi.alertDialog(
             'alreadyHave'.tr,
             'this_email_address_is_associated_with_an_existing_account'.tr,
             {},
@@ -96,7 +96,7 @@ class AuthController extends GetxController {
           );
           break;
         case 'too-many-requests':
-          customDialog.customDialog(
+          customUi.alertDialog(
             'too_many_requests'.tr,
             'try_again_later'.tr,
             {},
@@ -110,7 +110,7 @@ class AuthController extends GetxController {
           break;
 
         default:
-          customDialog.customDialog(
+          customUi.alertDialog(
             'error_occured'.tr,
             e.message.toString(),
             {},
@@ -131,6 +131,7 @@ class AuthController extends GetxController {
   logOut() async {
     userData = null;
     getStorage.remove('uid');
+    firebaseAuth.signOut();
     Get.offAllNamed('/');
   }
 
@@ -150,11 +151,13 @@ class AuthController extends GetxController {
         } else {
           await logOut();
         }
+      }).onError((e, e1) async {
+        await logOut();
       });
     }
   }
 
-  navigator() async {
+  getAppData() async {
     await firestore
         .collection('appData')
         .doc('appData')
@@ -162,7 +165,10 @@ class AuthController extends GetxController {
         .then((value) async {
       appData = AppModel.fromJson(value.data() as Map);
     }).onError((e, e1) {});
+  }
 
+  navigator() async {
+    await getAppData();
     await getCurrentUserData();
 
     if (userData == null) {
@@ -206,7 +212,7 @@ class AuthController extends GetxController {
     setLoading(true);
     try {
       if (!RegExp(r'\S+@\S+\.\S+').hasMatch(emailController.text)) {
-        customDialog.customDialog(
+        customUi.alertDialog(
           'error_occured'.tr,
           'please_enter_a_valid_email'.tr,
           {},
@@ -221,7 +227,7 @@ class AuthController extends GetxController {
       }
 
       if (passwordController.text.length < 6) {
-        customDialog.customDialog(
+        customUi.alertDialog(
           'error_occured'.tr,
           'password_length_should_at_least_6_character'.tr,
           {},
@@ -235,7 +241,7 @@ class AuthController extends GetxController {
         return;
       }
       if (fNameController.text.length < 3) {
-        customDialog.customDialog(
+        customUi.alertDialog(
           'error_occured'.tr,
           'please_enter_your_name'.tr,
           {},
@@ -262,7 +268,7 @@ class AuthController extends GetxController {
 
       switch (e.code) {
         case 'email-already-in-use':
-          customDialog.customDialog(
+          customUi.alertDialog(
             'something_went_wrong'.tr,
             'this_email_address_is_already_in_use'.tr,
             {},
@@ -275,7 +281,7 @@ class AuthController extends GetxController {
           );
           break;
         case 'too-many-requests':
-          customDialog.customDialog(
+          customUi.alertDialog(
             'too_many_requests'.tr,
             'try_again_later'.tr,
             {},
@@ -289,7 +295,7 @@ class AuthController extends GetxController {
           break;
 
         default:
-          customDialog.customDialog(
+          customUi.alertDialog(
             'error_occured'.tr,
             e.message.toString(),
             {},
@@ -348,7 +354,7 @@ class AuthController extends GetxController {
 
   signingInAuth() async {
     if (!RegExp(r'\S+@\S+\.\S+').hasMatch(emailController.text)) {
-      customDialog.customDialog(
+      customUi.alertDialog(
         'error_occured'.tr,
         'please_enter_a_valid_email'.tr,
         {},
@@ -363,7 +369,7 @@ class AuthController extends GetxController {
     }
 
     if (passwordController.text.length < 6) {
-      customDialog.customDialog(
+      customUi.alertDialog(
         'error_occured'.tr,
         'password_length_should_at_least_6_character'.tr,
         {},
@@ -388,7 +394,7 @@ class AuthController extends GetxController {
 
       switch (e.code) {
         case 'wrong-password':
-          customDialog.customDialog(
+          customUi.alertDialog(
             'something_went_wrong'.tr,
             'incorrect_password'.tr,
             {},
@@ -401,7 +407,7 @@ class AuthController extends GetxController {
           );
           break;
         case 'user-not-found' || 'invalid-email':
-          customDialog.customDialog(
+          customUi.alertDialog(
             'your_account_not_found'.tr,
             'you_can_create_a_new_account_or_try_again'.tr,
             {
@@ -419,7 +425,7 @@ class AuthController extends GetxController {
           );
           break;
         case 'too-many-requests':
-          customDialog.customDialog(
+          customUi.alertDialog(
             'too_many_requests'.tr,
             'try_again_later'.tr,
             {},
@@ -432,7 +438,7 @@ class AuthController extends GetxController {
           );
           break;
         default:
-          customDialog.customDialog(
+          customUi.alertDialog(
             'error_occured'.tr,
             e.message.toString(),
             {},

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infinityminer/helper/get_initial.dart';
+import 'package:infinityminer/view/widgets/custom_button.dart';
+import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -7,33 +9,12 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        width: 600,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.black.withOpacity(0.8),
-              Colors.black.withOpacity(0.6)
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.6),
-              spreadRadius: 5,
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
-        padding: const EdgeInsets.all(20.0),
+      child: CustomScrollBar(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
+          children: [
             CircleAvatar(
-              radius: 80,
+              radius: 70,
               backgroundColor: Colors.white,
               child: Icon(
                 Icons.person,
@@ -46,6 +27,7 @@ class ProfileScreen extends StatelessWidget {
               authController.userData!.name,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: 30,
                 color: Colors.white,
               ),
             ),
@@ -57,21 +39,15 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                authController.logOut();
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.blueAccent,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              child: const Text('Log out'),
-            ),
+            CustomButton(
+                title: 'log_out',
+                function: () {
+                  authController.logOut();
+                },
+                width: 150,
+                height: 30,
+                size: 16,
+                color: Colors.red)
           ],
         ),
       ),
