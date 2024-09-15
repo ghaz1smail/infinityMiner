@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class UserController extends GetxController {
   var getStorage = GetStorage();
-  RxInt selectedIndex = 0.obs, userCount = 20000.obs;
+  RxInt selectedIndex = 0.obs, userCount = 200000.obs;
   bool checking = true;
   RxString bitCoinPrice = ''.obs;
 
@@ -21,9 +21,9 @@ class UserController extends GetxController {
 
   changeUserCount() {
     Random random = Random();
-    userCount.value = 20000 + random.nextInt(10000);
+    userCount.value = 200000 + random.nextInt(100000);
     Timer.periodic(const Duration(seconds: 30), (c) {
-      userCount.value = 20000 + random.nextInt(10000);
+      userCount.value = 200000 + random.nextInt(100000);
     });
   }
 

@@ -39,82 +39,61 @@ class _MiningDevicesScreenState extends State<MiningDevicesScreen> {
         itemCount: appData.miningPlans.length,
         itemBuilder: (context, index) {
           final device = appData.miningPlans[index];
-          return _buildDeviceTile(device);
+          return buildDeviceTile(device);
         },
       ),
     ));
   }
+}
 
-  Widget _buildDeviceTile(DeviceModel device) {
-    bool isMobile = Get.width < 475;
-    return GestureDetector(
-      onTap: () {
+Widget buildDeviceTile(DeviceModel device, {bool buy = true}) {
+  bool isMobile = Get.width < 475;
+  return GestureDetector(
+    onTap: () {
+      if (buy) {
         customUi.customDialog(DeviceDialog(
           deviceData: device,
         ));
-      },
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                device.name,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: isMobile ? 20 : 25,
-                ),
-                textAlign: TextAlign.center,
+      }
+    },
+    child: Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Text(
+              device.name,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: isMobile ? 20 : 25,
               ),
+              textAlign: TextAlign.center,
             ),
-            Expanded(
-              child: ClipRRect(
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(10)),
-                  child: Image.asset(
-                    'assets/images/devices/${device.image}.png',
-                    width: Get.width,
-                    height: Get.height,
-                    fit: BoxFit.fitHeight,
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: isMobile
-                  ? Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            device.miningRate,
-                            style: TextStyle(
-                              color: appTheme.primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: isMobile ? 16 : 20,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            '\$ ${device.subscriptionPrice}',
-                            style: TextStyle(
-                              color: appTheme.primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: isMobile ? 16 : 20,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ),
+          Expanded(
+            child: ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(10)),
+                child: Image.asset(
+                  'assets/images/devices/${device.image}.png',
+                  width: Get.width,
+                  height: Get.height,
+                  fit: BoxFit.fitHeight,
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: isMobile
+                ? Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          device.miningRate,
+                          device.miningRateString,
                           style: TextStyle(
                             color: appTheme.primaryColor,
                             fontWeight: FontWeight.bold,
@@ -133,10 +112,33 @@ class _MiningDevicesScreenState extends State<MiningDevicesScreen> {
                         ),
                       ],
                     ),
-            ),
-          ],
-        ),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        device.miningRateString,
+                        style: TextStyle(
+                          color: appTheme.primaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: isMobile ? 16 : 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        '\$ ${device.subscriptionPrice}',
+                        style: TextStyle(
+                          color: appTheme.primaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: isMobile ? 16 : 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
 }

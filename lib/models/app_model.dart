@@ -2,13 +2,13 @@ class AppModel {
   final bool server;
   final List? admins;
   final String wallet;
-  final String wallet2;
+  final String network;
 
   AppModel({
     this.server = false,
     this.admins,
     this.wallet = '',
-    this.wallet2 = '',
+    this.network = '',
   });
 
   factory AppModel.fromJson(Map json) {
@@ -16,6 +16,6 @@ class AppModel {
         server: json['server'] ?? false,
         admins: json['admins'] ?? [],
         wallet: json['wallet'] ?? '',
-        wallet2: json['wallet2'] ?? '');
+        network: json['network'] ?? '');
   }
 }

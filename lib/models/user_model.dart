@@ -23,6 +23,9 @@ class UserModel {
   List? tags;
   List? userUsingCode;
   String codeIUse;
+  String lastMining;
+  String profit;
+  String deviceId;
 
   UserModel({
     this.username = '',
@@ -49,6 +52,9 @@ class UserModel {
     this.tags,
     this.userUsingCode,
     this.codeIUse = '',
+    this.lastMining = '',
+    this.profit = '',
+    this.deviceId = '',
   });
 
   Map<String, dynamic> toJson() {
@@ -76,6 +82,9 @@ class UserModel {
       'tags': tags,
       'userUsingCode': userUsingCode,
       'codeIUse': codeIUse,
+      'lastMining': lastMining,
+      'profit': profit,
+      'deviceId': deviceId,
     };
   }
 
@@ -106,6 +115,9 @@ class UserModel {
       tags: json['tags'] ?? [],
       codeIUse: json['codeIUse'] ?? '',
       userUsingCode: json['userUsingCode'] ?? [],
+      lastMining: json['lastMining'] ?? '',
+      profit: json['profit'] ?? '',
+      deviceId: json['deviceId'] ?? '',
     );
   }
 }

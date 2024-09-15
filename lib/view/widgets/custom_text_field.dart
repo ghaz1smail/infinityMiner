@@ -13,6 +13,7 @@ class CustomTextField extends StatefulWidget {
       this.length = 0,
       this.onChange,
       this.onSubmit,
+      this.borderColor = Colors.white,
       this.type = TextInputType.emailAddress});
 
   final TextEditingController? controller;
@@ -22,6 +23,7 @@ class CustomTextField extends StatefulWidget {
   final int length;
   final Function? onChange, onSubmit;
   final Iterable<String>? autofill;
+  final Color borderColor;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -39,7 +41,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           padding: const EdgeInsets.all(5),
           child: Text(
             widget.hint.tr,
-            style: const TextStyle(fontSize: 12, color: Colors.white),
+            style: TextStyle(fontSize: 12, color: widget.borderColor),
           ),
         ),
         SizedBox(
@@ -60,7 +62,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 widget.onSubmit!(w);
               }
             },
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: widget.borderColor),
             cursorColor: appTheme.primaryColor,
             autofillHints: widget.autofill,
             controller: widget.controller,
@@ -90,7 +92,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   borderRadius: BorderRadius.circular(
                     10,
                   ),
-                  borderSide: const BorderSide(color: Colors.white)),
+                  borderSide: BorderSide(color: widget.borderColor)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(
                     10,

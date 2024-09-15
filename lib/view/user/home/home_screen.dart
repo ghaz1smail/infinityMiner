@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             children: [
                               Text(
-                                '${'mining_users'.tr}: ${userController.bitCoinPrice.value}',
+                                '${'active_users'.tr}: ${userController.bitCoinPrice.value}',
                                 style: const TextStyle(fontSize: 30),
                               ),
                               Obx(

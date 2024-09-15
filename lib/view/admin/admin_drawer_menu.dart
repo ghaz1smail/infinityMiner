@@ -14,7 +14,7 @@ class AdminDrawerMenu extends StatelessWidget {
           ListTile(
             onTap: () {
               Get.back();
-              userController.changeSelectedIndex('/requests');
+              adminController.changeSelectedIndex('/requests');
             },
             title: Text(
               'requests'.tr,
@@ -25,7 +25,7 @@ class AdminDrawerMenu extends StatelessWidget {
           ListTile(
             onTap: () {
               Get.back();
-              userController.changeSelectedIndex('/messages');
+              adminController.changeSelectedIndex('/messages');
             },
             title: Text(
               'messages'.tr,

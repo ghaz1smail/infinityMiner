@@ -3,7 +3,9 @@ class DeviceModel {
   final String name;
   final String image;
   final double subscriptionPrice;
-  final String miningRate;
+  final double miningRate;
+
+  final String miningRateString;
   final String description;
 
   DeviceModel({
@@ -11,6 +13,7 @@ class DeviceModel {
     required this.name,
     required this.image,
     required this.subscriptionPrice,
+    required this.miningRateString,
     required this.miningRate,
     required this.description,
   });
@@ -21,7 +24,8 @@ class DeviceModel {
       'name': name,
       'image': image,
       'subscriptionPrice': subscriptionPrice,
-      'miningRateRange': miningRate,
+      'miningRateString': miningRateString,
+      'miningRate': miningRate,
       'description': description,
     };
   }
@@ -31,8 +35,9 @@ class DeviceModel {
       id: json['id'] ?? '',
       name: json['name'] ?? '',
       image: json['image'] ?? '',
+      miningRate: double.parse(json['miningRate'].toString()),
       subscriptionPrice: double.parse(json['subscriptionPrice'].toString()),
-      miningRate: json['miningRateRange'] ?? '',
+      miningRateString: json['miningRateString'] ?? '',
       description: json['description'] ?? '',
     );
   }

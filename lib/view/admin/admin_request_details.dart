@@ -8,6 +8,7 @@ import 'package:infinityminer/view/widgets/cached_network_image.dart';
 import 'package:infinityminer/view/widgets/custom_button.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
 import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
+import 'package:infinityminer/view/widgets/full_screen.dart';
 import 'package:intl/intl.dart';
 
 class AdminRequestDetails extends StatefulWidget {
@@ -45,6 +46,10 @@ class _AdminRequestDetailsState extends State<AdminRequestDetails> {
       'userData': requestData!.userData.toJson(),
       'deviceData': device.toJson(),
       'requestData': requestData!.toJson(),
+    });
+
+    firestore.collection('users').doc(requestData!.userData.uid).update({
+      'deviceId': device.id,
     });
     getRequestData();
   }
@@ -119,11 +124,16 @@ class _AdminRequestDetailsState extends State<AdminRequestDetails> {
                   const SizedBox(
                     height: 20,
                   ),
-                  CustomImageNetwork(
-                      url: requestData!.attachFile,
-                      width: 200,
-                      height: 200,
-                      boxFit: BoxFit.fill),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => FullScreen(image: requestData!.attachFile));
+                    },
+                    child: CustomImageNetwork(
+                        url: requestData!.attachFile,
+                        width: 200,
+                        height: 200,
+                        boxFit: BoxFit.fill),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),

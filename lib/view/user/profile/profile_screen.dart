@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinityminer/helper/get_initial.dart';
+import 'package:infinityminer/view/user/profile/using_code_dialog.dart';
 import 'package:infinityminer/view/widgets/custom_button.dart';
 import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
 
@@ -41,31 +42,99 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 30),
+              padding: const EdgeInsets.only(top: 20, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '@${authController.userData!.username}  |  ',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      // Clipboard.setData(ClipboardData(
+                      //     text:
+                      //         'https://infinityminer.net/#/refer-code/${authController.userData!.username}'));
+                      Clipboard.setData(ClipboardData(
+                          text: authController.userData!.username));
+                      Get.showSnackbar(GetSnackBar(
+                        margin: const EdgeInsets.all(20),
+                        message: 'invite_link_copied_to_clipboard'.tr,
+                        duration: const Duration(seconds: 5),
+                        borderRadius: 20,
+                      ));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'invite_friends'.tr,
+                          style: TextStyle(
+                              color: appTheme.primaryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(width: 5),
+                        Icon(
+                          Icons.person_add,
+                          color: appTheme.primaryColor,
+                          size: 18,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (authController.userData!.codeIUse.isEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: InkWell(
+                  onTap: () {
+                    customUi.customDialog(const UsingCodeDialog());
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'use_friend_code'.tr,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: appTheme.primaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(width: 5),
+                      Icon(
+                        Icons.qr_code_rounded,
+                        color: appTheme.primaryColor,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
               child: InkWell(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(
-                      text:
-                          'https://infinityminer.net/refer-code/${authController.userData!.username}'));
-                  Get.showSnackbar(GetSnackBar(
-                    margin: const EdgeInsets.all(20),
-                    message: 'invite_link_copied_to_clipboard'.tr,
-                    duration: const Duration(seconds: 5),
-                    borderRadius: 20,
-                  ));
+                  Get.toNamed('/members');
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'invite_friends'.tr,
+                      'members'.tr,
                       style: TextStyle(
+                          fontSize: 20,
                           color: appTheme.primaryColor,
-                          fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
-                    Icon(Icons.person_add, color: appTheme.primaryColor)
+                    const SizedBox(width: 5),
+                    Icon(
+                      Icons.group,
+                      color: appTheme.primaryColor,
+                    )
                   ],
                 ),
               ),

@@ -33,7 +33,7 @@ class DeviceDialog extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Text(
-              '${'mining_rate'.tr}: ${deviceData.miningRate}',
+              '${'mining_rate'.tr}: ${deviceData.miningRateString}',
               style: TextStyle(
                 color: appTheme.primaryColor,
                 fontWeight: FontWeight.bold,

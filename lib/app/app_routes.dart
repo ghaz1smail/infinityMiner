@@ -6,12 +6,14 @@ import 'package:infinityminer/view/user/contact_us/contact_us_screen.dart';
 import 'package:infinityminer/view/user/devices/mining_devices_screen.dart';
 import 'package:infinityminer/view/register/forget_screen.dart';
 import 'package:infinityminer/view/register/register_screen.dart';
+import 'package:infinityminer/view/user/profile/members_screen.dart';
 import 'package:infinityminer/view/user/profile/profile_screen.dart';
 import 'package:infinityminer/view/user/user_screen.dart';
 import 'package:infinityminer/view/user/wallet/wallet_screen.dart';
 
 class AppRoutes {
   List<GetPage<dynamic>>? pagesRoutes = [
+    GetPage(name: '/members', page: () => const MembersScreen()),
     GetPage(name: '/', page: () => const RegisterScreen()),
     GetPage(name: '/home', page: () => const UserScreen()),
     GetPage(
