@@ -21,10 +21,9 @@ class UserController extends GetxController {
 
   changeUserCount() {
     Random random = Random();
-    int min = 20000, max = 30000;
-    userCount.value = (min + random.nextInt(max - min));
+    userCount.value = 20000 + random.nextInt(10000);
     Timer.periodic(const Duration(seconds: 30), (c) {
-      userCount.value = (min + random.nextInt(max - min)).toInt();
+      userCount.value = 20000 + random.nextInt(10000);
     });
   }
 

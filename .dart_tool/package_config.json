@@ -8,6 +8,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "animated_flip_counter",
+      "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/animated_flip_counter-0.3.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "ansicolor",
       "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/ansicolor-2.0.3",
       "packageUri": "lib/",
@@ -374,6 +380,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/intl-0.19.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "js",
       "rootUri": "file:///Users/gh0zi0/.pub-cache/hosted/pub.dev/js-0.7.1",
       "packageUri": "lib/",
@@ -638,7 +650,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-09-14T21:39:37.667435Z",
+  "generated": "2024-09-15T11:44:39.618718Z",
   "generator": "pub",
   "generatorVersion": "3.5.1",
   "flutterRoot": "file:///Users/gh0zi0/FlutterDev/flutter",

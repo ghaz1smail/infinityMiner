@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:infinityminer/helper/get_initial.dart';
 import 'package:infinityminer/models/device_model.dart';
 import 'package:infinityminer/view/user/devices/device_dialog.dart';
-import 'package:infinityminer/view/widgets/cached_network_image.dart';
 import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
 
 class MiningDevicesScreen extends StatefulWidget {
@@ -76,11 +75,11 @@ class _MiningDevicesScreenState extends State<MiningDevicesScreen> {
               child: ClipRRect(
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(10)),
-                  child: CustomImageNetwork(
-                    url: 'assets/images/devices/${device.image}.png',
+                  child: Image.asset(
+                    'assets/images/devices/${device.image}.png',
                     width: Get.width,
                     height: Get.height,
-                    boxFit: BoxFit.fitHeight,
+                    fit: BoxFit.fitHeight,
                   )),
             ),
             Padding(

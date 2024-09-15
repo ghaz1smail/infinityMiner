@@ -75,6 +75,7 @@ class Languages extends Translations {
           'select_device': 'Select device',
           'reject': 'Reject',
           'done': 'Done',
+          'invite_friends': 'Invite friends',
           'status': 'Status',
           'miningRateRange': 'Mining rate range',
           'subscriptionPrice': 'Subscription Price',

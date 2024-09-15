@@ -59,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'invite_friends',
+                      'invite_friends'.tr,
                       style: TextStyle(
                           color: appTheme.primaryColor,
                           fontSize: 18,
