@@ -52,9 +52,10 @@ class _BuyDeviceDialogState extends State<BuyDeviceDialog> {
     await firestore.collection('transfer').doc(id).set({
       'userData': authController.userData!.toJson(),
       'id': id,
+      'status': 'pending',
       'deviceData': widget.deviceData.toJson(),
       'attachFile': imageUrl,
-      'timestamp': DateTime.now().microsecondsSinceEpoch.toString()
+      'timestamp': DateTime.now().toIso8601String()
     });
 
     attachFile = null;
@@ -98,8 +99,10 @@ class _BuyDeviceDialogState extends State<BuyDeviceDialog> {
   Widget build(BuildContext context) {
     bool isMobile = Get.width < 475;
     return SizedBox(
+      height: isMobile ? Get.height : 300,
       width: isMobile ? Get.width : 600,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Padding(
             padding: const EdgeInsets.all(10),
@@ -126,7 +129,7 @@ class _BuyDeviceDialogState extends State<BuyDeviceDialog> {
                           ClipboardData(text: authController.appData!.wallet));
                       Get.showSnackbar(GetSnackBar(
                         margin: const EdgeInsets.all(20),
-                        message: 'text_copied_to_clipboard'.tr,
+                        message: 'wallet_address_copied_to_clipboard'.tr,
                         duration: const Duration(seconds: 5),
                         borderRadius: 20,
                       ));
@@ -148,6 +151,7 @@ class _BuyDeviceDialogState extends State<BuyDeviceDialog> {
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
                           Icons.attach_file,

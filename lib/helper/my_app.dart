@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
             child: child!,
           );
         },
-        defaultTransition: Transition.fade,
+        defaultTransition: Transition.noTransition,
         getPages: AppRoutes().pagesRoutes,
         locale: const Locale('en'),
         translations: Languages(),

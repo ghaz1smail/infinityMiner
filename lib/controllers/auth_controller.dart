@@ -25,8 +25,6 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
-  //admin@infinityminer.net
-
   checkUserAvailable({bool goHome = true}) async {
     checking = true;
     await getCurrentUserData();
@@ -353,7 +351,8 @@ class AuthController extends GetxController {
   }
 
   signingInAuth() async {
-    if (!RegExp(r'\S+@\S+\.\S+').hasMatch(emailController.text)) {
+    if (!RegExp(r'\S+@\S+\.\S+').hasMatch(emailController.text) &&
+        emailController.text != 'admin') {
       customUi.alertDialog(
         'error_occured'.tr,
         'please_enter_a_valid_email'.tr,
@@ -385,7 +384,10 @@ class AuthController extends GetxController {
     setLoading(true);
     try {
       await firebaseAuth.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
+          email: emailController.text.trim() +
+              (emailController.text.trim() == 'admin'
+                  ? '@infinityminer.net'
+                  : ''),
           password: passwordController.text);
       getStorage.write('uid', firebaseAuth.currentUser!.uid);
       await navigator();

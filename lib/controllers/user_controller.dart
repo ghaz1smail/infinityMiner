@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -7,9 +9,24 @@ import 'package:http/http.dart' as http;
 
 class UserController extends GetxController {
   var getStorage = GetStorage();
-  RxInt selectedIndex = 0.obs;
+  RxInt selectedIndex = 0.obs, userCount = 20000.obs;
   bool checking = true;
   RxString bitCoinPrice = ''.obs;
+
+  @override
+  void onInit() {
+    changeUserCount();
+    super.onInit();
+  }
+
+  changeUserCount() {
+    Random random = Random();
+    int min = 20000, max = 30000;
+    userCount.value = (min + random.nextInt(max - min));
+    Timer.periodic(const Duration(seconds: 30), (c) {
+      userCount.value = (min + random.nextInt(max - min)).toInt();
+    });
+  }
 
   getBitCoinPrice() async {
     var headers = {
@@ -59,11 +76,11 @@ class UserController extends GetxController {
     if (updateData) {
       update();
     }
-    await Future.delayed(const Duration(milliseconds: 100));
     var uid = getStorage.read('uid');
     Get.log(uid.toString());
     if (uid != null) {
       await authController.getCurrentUserData();
+
       if (authController.userData!.type == 'admin') {
         Get.offAllNamed('/admin');
       } else {
@@ -71,6 +88,8 @@ class UserController extends GetxController {
         update();
       }
     } else {
+      await Future.delayed(const Duration(milliseconds: 100));
+
       Get.offAllNamed('/');
     }
   }

@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:infinityminer/controllers/admin_controller.dart';
 import 'package:infinityminer/controllers/user_controller.dart';
 import 'package:infinityminer/app/app_theme.dart';
 import 'package:infinityminer/app/app_assets.dart';
@@ -21,6 +22,7 @@ class GetInitial {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     Get.put(AuthController());
+    Get.put(AdminController());
     Get.put(UserController());
     await GetStorage.init();
   }
@@ -36,6 +38,8 @@ GetStorage getStorage = GetStorage();
 CustomFormats customFormats = CustomFormats();
 CustomUi customUi = CustomUi();
 AuthController authController = Get.find<AuthController>();
+AdminController adminController = Get.find<AdminController>();
+
 UserController userController = Get.find<UserController>();
 
 Color colorCompute(color) {

@@ -51,7 +51,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         'uid': authController.userData!.uid,
         'id': id,
         'attachFile': imageUrl,
-        'timestamp': DateTime.now().microsecondsSinceEpoch.toString()
+        'timestamp': DateTime.now().toIso8601String()
       });
       _nameController.clear();
       _emailController.clear();
@@ -199,6 +199,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(
                                 Icons.attach_file,

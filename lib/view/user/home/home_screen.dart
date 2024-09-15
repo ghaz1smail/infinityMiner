@@ -1,3 +1,4 @@
+import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -61,8 +62,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 200,
                       color: appTheme.primaryColor),
                   Padding(
-                    padding: const EdgeInsets.only(top: 100),
+                    padding: const EdgeInsets.only(top: 50),
                     child: Obx(() => Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(100)),
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: Text(
@@ -71,7 +74,35 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         )),
-                  )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: FittedBox(
+                          child: Row(
+                            children: [
+                              Text(
+                                '${'mining_users'.tr}: ${userController.bitCoinPrice.value}',
+                                style: const TextStyle(fontSize: 30),
+                              ),
+                              Obx(
+                                () => AnimatedFlipCounter(
+                                  value: userController.userCount.value,
+                                  fractionDigits: 0,
+                                  suffix: "",
+                                  textStyle: const TextStyle(fontSize: 30),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )

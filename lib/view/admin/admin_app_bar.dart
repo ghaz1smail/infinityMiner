@@ -14,7 +14,7 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: TextButton(
         onPressed: () {
-          userController.changeSelectedIndex('/home');
+          adminController.changeSelectedIndex('/dashboard');
         },
         child: Text(
           'app_name'.tr,
@@ -39,44 +39,32 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
             ]
           : [
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  adminController.changeSelectedIndex('/requests');
+                },
                 child: Text(
-                  'mining_devices'.tr,
+                  'requests'.tr,
                   style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  adminController.changeSelectedIndex('/messages');
+                },
                 child: Text(
-                  'wallet'.tr,
+                  'messages'.tr,
                   style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'contact_us'.tr,
-                  style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: GestureDetector(
-                  onTap: () {
-                    authController.logOut();
-                  },
-                  child: CircleAvatar(
-                    radius: 15,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
-                      color: appTheme.primaryColor,
-                      size: 16,
-                    ),
-                  ),
+              IconButton(
+                onPressed: () {
+                  authController.logOut();
+                },
+                icon: const Icon(
+                  Icons.logout,
+                  color: Colors.red,
                 ),
               ),
             ],

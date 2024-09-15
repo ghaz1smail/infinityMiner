@@ -1,4 +1,5 @@
 class DeviceModel {
+  final String id;
   final String name;
   final String image;
   final double subscriptionPrice;
@@ -6,6 +7,7 @@ class DeviceModel {
   final String description;
 
   DeviceModel({
+    required this.id,
     required this.name,
     required this.image,
     required this.subscriptionPrice,
@@ -15,6 +17,7 @@ class DeviceModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
       'image': image,
       'subscriptionPrice': subscriptionPrice,
@@ -25,6 +28,7 @@ class DeviceModel {
 
   factory DeviceModel.fromJson(Map<String, dynamic> json) {
     return DeviceModel(
+      id: json['id'] ?? '',
       name: json['name'] ?? '',
       image: json['image'] ?? '',
       subscriptionPrice: double.parse(json['subscriptionPrice'].toString()),

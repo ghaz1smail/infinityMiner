@@ -39,8 +39,7 @@ class CustomUi {
     );
   }
 
-  customDialog(String title, Widget content) {
-    Get.defaultDialog(
-        title: '', radius: 10, content: content, titlePadding: EdgeInsets.zero);
+  customDialog(Widget content) {
+    Get.dialog(Dialog(child: content));
   }
 }

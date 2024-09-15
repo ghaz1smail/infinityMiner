@@ -13,8 +13,10 @@ class DeviceDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isMobile = Get.width < 475;
     return SizedBox(
+      height: isMobile ? Get.height : 300,
       width: isMobile ? Get.width : 600,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
             '- ${deviceData.name} -',
@@ -46,11 +48,9 @@ class DeviceDialog extends StatelessWidget {
                 title: '\$ ${deviceData.subscriptionPrice} ' 'buy',
                 function: () {
                   Get.back();
-                  customUi.customDialog(
-                      '',
-                      BuyDeviceDialog(
-                        deviceData: deviceData,
-                      ));
+                  customUi.customDialog(BuyDeviceDialog(
+                    deviceData: deviceData,
+                  ));
                 },
                 width: 100,
                 color: appTheme.primaryColor),
