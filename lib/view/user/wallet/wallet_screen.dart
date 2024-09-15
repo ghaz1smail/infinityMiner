@@ -5,6 +5,7 @@ import 'package:infinityminer/helper/get_initial.dart';
 import 'package:infinityminer/view/user/devices/mining_devices_screen.dart';
 import 'package:infinityminer/view/user/wallet/withdraw_dialog.dart';
 import 'package:infinityminer/view/widgets/custom_button.dart';
+import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -35,7 +36,8 @@ class _WalletScreenState extends State<WalletScreen> {
         first = false;
       }
 
-      if (DateTime.now().difference(timestamp).inHours < 24) {
+      if (DateTime.now().difference(timestamp).inHours < 24 &&
+          authController.userData!.lastMining.isNotEmpty) {
         counter = counter + addingValue;
         timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
           setState(() {
@@ -74,135 +76,185 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            '${'current_device'.tr}: ',
-            style: const TextStyle(color: Colors.white, fontSize: 30),
-          ),
-          authController.userData!.deviceId.isNotEmpty
-              ? Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  height: 250,
-                  width: 250,
-                  child: buildDeviceTile(
-                      appData.miningPlans.firstWhere(
-                          (w) => w.id == authController.userData!.deviceId),
-                      buy: false))
-              : Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Wrap(
-                    runSpacing: 20,
-                    spacing: 20,
-                    children: [
-                      Text(
-                        'no_device_yet'.tr,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 30),
-                      ),
-                      CustomButton(
-                          title: 'buy',
-                          function: () {
-                            userController
-                                .changeSelectedIndex('/mining-devices');
-                          },
-                          width: 200,
-                          color: appTheme.primaryColor)
-                    ],
+      child: CustomScrollBar(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              '${'current_device'.tr}: ',
+              style: const TextStyle(color: Colors.white, fontSize: 30),
+            ),
+            authController.userData!.deviceId.isNotEmpty
+                ? Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    height: 250,
+                    width: 250,
+                    child: buildDeviceTile(
+                        appData.miningPlans.firstWhere(
+                            (w) => w.id == authController.userData!.deviceId),
+                        buy: false))
+                : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Wrap(
+                      runSpacing: 20,
+                      spacing: 20,
+                      children: [
+                        Text(
+                          'no_device_yet'.tr,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 30),
+                        ),
+                        CustomButton(
+                            title: 'buy',
+                            function: () {
+                              userController
+                                  .changeSelectedIndex('/mining-devices');
+                            },
+                            width: 200,
+                            color: appTheme.primaryColor)
+                      ],
+                    ),
                   ),
-                ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            'current_profit'.tr,
-            style: const TextStyle(color: Colors.white, fontSize: 30),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            '$profit USTD',
-            style: const TextStyle(color: Colors.white, fontSize: 30),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            '${'daily_income_counter'.tr}: ',
-            style: const TextStyle(color: Colors.white, fontSize: 30),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            '$counter USTD',
-            style: const TextStyle(color: Colors.white, fontSize: 30),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          DateTime.now().difference(timestamp).inHours < 24
-              ? Chip(
-                  label: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        '${'your_mining_session_will_end_in'.tr} ',
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                      SlideCountdown(
-                          duration:
-                              timestamp.add(const Duration(days: 1)).difference(
-                                    DateTime.now(),
-                                  ))
-                    ],
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.8),
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
                   ),
-                )
-              : CustomButton(
-                  title: 'start_mining',
-                  function: () {
-                    if (authController.userData!.deviceId.isNotEmpty) {
-                      if (DateTime.now().difference(timestamp).inHours > 24 ||
-                          authController.userData!.lastMining.isEmpty) {
-                        setState(() {
-                          timestamp = DateTime.now();
-                          timerx();
-                        });
+                ],
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    'current_profit'.tr,
+                    style: const TextStyle(color: Colors.white, fontSize: 30),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '$profit USDT',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.greenAccent,
+                        fontSize: 25),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.8),
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    '${'daily_income_counter'.tr}: ',
+                    style: const TextStyle(color: Colors.white, fontSize: 30),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '$counter USDT',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.greenAccent,
+                        fontSize: 25),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            DateTime.now().difference(timestamp).inHours < 24 &&
+                    authController.userData!.lastMining.isNotEmpty
+                ? Chip(
+                    label: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '${'your_mining_session_will_end_in'.tr} ',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        SlideCountdown(
+                            duration: timestamp
+                                .add(const Duration(days: 1))
+                                .difference(
+                                  DateTime.now(),
+                                ))
+                      ],
+                    ),
+                  )
+                : CustomButton(
+                    title: 'start_mining',
+                    function: () {
+                      if (authController.userData!.deviceId.isNotEmpty) {
+                        if (DateTime.now().difference(timestamp).inHours > 24 ||
+                            authController.userData!.lastMining.isEmpty) {
+                          authController.userData!.lastMining =
+                              timestamp.toIso8601String();
+                          setState(() {
+                            timestamp = DateTime.now();
+                            timerx();
+                          });
 
-                        firestore
-                            .collection('users')
-                            .doc(authController.userData!.uid)
-                            .update(
-                                {'lastMining': timestamp.toIso8601String()});
+                          firestore
+                              .collection('users')
+                              .doc(authController.userData!.uid)
+                              .update(
+                                  {'lastMining': timestamp.toIso8601String()});
+                        }
+                      } else {
+                        userController.changeSelectedIndex('/mining-devices');
                       }
-                    } else {
-                      userController.changeSelectedIndex('/mining-devices');
-                    }
-                  },
-                  width: 200,
-                  color: appTheme.primaryColor),
-          const SizedBox(
-            height: 20,
-          ),
-          CustomButton(
-              title: 'withdraw',
-              function: () {
-                if (profit >= 10) {
-                  customUi.customDialog(const WithdrawDialog());
-                } else {
-                  Get.showSnackbar(GetSnackBar(
-                    margin: const EdgeInsets.all(20),
-                    message: 'minimum_withdrawl_is_10_USTD'.tr,
-                    duration: const Duration(seconds: 3),
-                    borderRadius: 20,
-                  ));
-                }
-              },
-              width: 200,
-              color: Colors.blue)
-        ],
+                    },
+                    width: 200,
+                    color: appTheme.primaryColor),
+            const SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+                title: 'withdraw',
+                function: () {
+                  if (profit >= 10) {
+                    customUi.customDialog(const WithdrawDialog());
+                  } else {
+                    Get.showSnackbar(GetSnackBar(
+                      margin: const EdgeInsets.all(20),
+                      message: 'minimum_withdrawl_is_10_USDT'.tr,
+                      duration: const Duration(seconds: 3),
+                      borderRadius: 20,
+                    ));
+                  }
+                },
+                width: 200,
+                color: Colors.blue)
+          ],
+        ),
       ),
     );
   }

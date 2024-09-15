@@ -83,7 +83,7 @@ class Languages extends Translations {
           'withdraw': 'Withdraw',
           'your_mining_session_will_end_in': 'Your mining session will end in',
           'hours': 'Hours',
-          'minimum_withdrawl_is_10_USTD': 'Minimum withdrawl is 10 USTD',
+          'minimum_withdrawl_is_10_USDT': 'Minimum withdrawl is 10 USDT',
           'start_mining': 'Start mining',
           'daily_income_counter': 'Daily income counter',
           'current_profit': 'Current profit',
