@@ -23,7 +23,7 @@ class _MiningDevicesScreenState extends State<MiningDevicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isMobile = Get.width < 475;
+    bool isMobile = Get.width < 600;
     return Scaffold(
         body: CustomScrollBar(
       child: GridView.builder(
@@ -47,7 +47,7 @@ class _MiningDevicesScreenState extends State<MiningDevicesScreen> {
 }
 
 Widget buildDeviceTile(DeviceModel device, {bool buy = true}) {
-  bool isMobile = Get.width < 475;
+  bool isMobile = Get.width < 600;
   return GestureDetector(
     onTap: () {
       if (buy) {

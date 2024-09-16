@@ -15,8 +15,7 @@ class AdminRequestsScreen extends StatefulWidget {
 class _AdminRequestsScreen extends State<AdminRequestsScreen> {
   final int _limit = 20;
   DocumentSnapshot? _lastDocument;
-  bool _hasMore = true;
-  bool _isLoading = false;
+  bool _hasMore = true, _isLoading = false, firstLoading = true;
   List<RequestModel> _documents = [];
 
   @override
@@ -26,36 +25,40 @@ class _AdminRequestsScreen extends State<AdminRequestsScreen> {
   }
 
   Future<void> _fetchData() async {
-    if (_isLoading) return;
-    setState(() {
-      _isLoading = true;
-    });
-
-    Query query = firestore.collection('transfer').limit(_limit);
-
-    if (_lastDocument != null) {
-      query = query.startAfterDocument(_lastDocument!);
-    }
-
-    QuerySnapshot querySnapshot = await query.get();
-
-    if (querySnapshot.docs.isNotEmpty) {
+    if (mounted) {
+      if (_isLoading) return;
       setState(() {
-        _lastDocument = querySnapshot.docs.last;
-        _hasMore = querySnapshot.docs.length == _limit;
-        if (querySnapshot.docs.isNotEmpty) {
-          _documents = querySnapshot.docs
-              .map((m) => RequestModel.fromJson(m.data() as Map))
-              .toList();
-        }
+        _isLoading = true;
+      });
 
-        _isLoading = false;
-      });
-    } else {
-      setState(() {
-        _hasMore = false;
-        _isLoading = false;
-      });
+      Query query = firestore.collection('transfer').limit(_limit);
+
+      if (_lastDocument != null) {
+        query = query.startAfterDocument(_lastDocument!);
+      }
+
+      QuerySnapshot querySnapshot = await query.get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        setState(() {
+          _lastDocument = querySnapshot.docs.last;
+          _hasMore = querySnapshot.docs.length == _limit;
+          if (querySnapshot.docs.isNotEmpty) {
+            _documents = querySnapshot.docs
+                .map((m) => RequestModel.fromJson(m.data() as Map))
+                .toList();
+          }
+
+          _isLoading = false;
+          firstLoading = false;
+        });
+      } else {
+        setState(() {
+          _hasMore = false;
+          _isLoading = false;
+          firstLoading = false;
+        });
+      }
     }
   }
 
@@ -65,47 +68,55 @@ class _AdminRequestsScreen extends State<AdminRequestsScreen> {
       appBar: AppBar(
         title: Text('requests'.tr),
       ),
-      body: _documents.isEmpty
-          ? Center(
-              child: Text(
-              'no_data_found'.tr,
-              style: const TextStyle(color: Colors.white),
-            ))
-          : NotificationListener<ScrollNotification>(
-              onNotification: (ScrollNotification scrollInfo) {
-                if (!_isLoading &&
-                    _hasMore &&
-                    scrollInfo.metrics.pixels ==
-                        scrollInfo.metrics.maxScrollExtent) {
-                  _fetchData();
-                }
-                return false;
-              },
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: _documents.length,
-                      itemBuilder: (context, index) {
-                        RequestModel document = _documents[index];
-                        return Card(
-                          child: ListTile(
-                            onTap: () {
-                              Get.toNamed('/request-details/${document.id}');
-                            },
-                            title: Text(
-                              document.userData.name,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+      body: firstLoading
+          ? const CustomLoading()
+          : _documents.isEmpty
+              ? Center(
+                  child: Text(
+                  'no_data_found'.tr,
+                  style: const TextStyle(color: Colors.white),
+                ))
+              : NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (!_isLoading &&
+                        _hasMore &&
+                        scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent) {
+                      _fetchData();
+                    }
+                    return false;
+                  },
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _documents.length,
+                          itemBuilder: (context, index) {
+                            RequestModel document = _documents[index];
+                            return Card(
+                              child: ListTile(
+                                onTap: () {
+                                  Get.toNamed(
+                                      '/request-details/${document.id}');
+                                },
+                                title: Text(
+                                  document.userData.name,
+                                ),
+                                tileColor: document.status == 'pending'
+                                    ? Colors.orange
+                                    : document.status == 'accepted'
+                                        ? Colors.green
+                                        : Colors.red,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      if (_isLoading) const CustomLoading()
+                    ],
                   ),
-                  if (_isLoading) const CustomLoading()
-                ],
-              ),
-            ),
+                ),
     );
   }
 }

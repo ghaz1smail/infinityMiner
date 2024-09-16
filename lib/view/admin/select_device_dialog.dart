@@ -26,7 +26,7 @@ class _SelectDeviceDialogState extends State<SelectDeviceDialog> {
 
   @override
   Widget build(BuildContext context) {
-    bool isMobile = Get.width < 475;
+    bool isMobile = Get.width < 600;
     return SizedBox(
       width: isMobile ? Get.width : 600,
       height: Get.height,

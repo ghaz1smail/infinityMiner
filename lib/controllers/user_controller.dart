@@ -19,11 +19,16 @@ class UserController extends GetxController {
     super.onInit();
   }
 
-  changeUserCount() {
+  changeUserCount() async {
     Random random = Random();
-    userCount.value = 200000 + random.nextInt(100000);
-    Timer.periodic(const Duration(seconds: 30), (c) {
+    await authController.getAppData();
+    userCount.value = int.parse(authController.appData!.activeUsers);
+    Timer.periodic(const Duration(minutes: 1), (c) {
       userCount.value = 200000 + random.nextInt(100000);
+      firestore
+          .collection('appData')
+          .doc('appData')
+          .update({'activeUsers': userCount.value.toString()});
     });
   }
 

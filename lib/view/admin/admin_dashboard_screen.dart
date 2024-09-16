@@ -4,9 +4,14 @@ import 'package:get/get.dart';
 import 'package:infinityminer/helper/get_initial.dart';
 import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
 
-class AdminDashboardScreen extends StatelessWidget {
+class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
 
+  @override
+  State<AdminDashboardScreen> createState() => _AdminDashboardScreenState();
+}
+
+class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollBar(
@@ -35,12 +40,20 @@ class AdminDashboardScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const AnimatedFlipCounter(
-                          value: 0,
-                          fractionDigits: 0,
-                          suffix: "",
-                          textStyle: TextStyle(fontSize: 30),
-                        ),
+                        FutureBuilder(
+                          future: firestore.collection('users').get(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return AnimatedFlipCounter(
+                                value: snapshot.data!.size,
+                                fractionDigits: 0,
+                                suffix: "",
+                                textStyle: const TextStyle(fontSize: 30),
+                              );
+                            }
+                            return const CircularProgressIndicator();
+                          },
+                        )
                       ],
                     ),
                   ),
@@ -69,12 +82,20 @@ class AdminDashboardScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const AnimatedFlipCounter(
-                            value: 0,
-                            fractionDigits: 0,
-                            suffix: "",
-                            textStyle: TextStyle(fontSize: 30),
-                          ),
+                          FutureBuilder(
+                            future: firestore.collection('contact').get(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return AnimatedFlipCounter(
+                                  value: snapshot.data!.size,
+                                  fractionDigits: 0,
+                                  suffix: "",
+                                  textStyle: const TextStyle(fontSize: 30),
+                                );
+                              }
+                              return const CircularProgressIndicator();
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -105,12 +126,20 @@ class AdminDashboardScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const AnimatedFlipCounter(
-                            value: 0,
-                            fractionDigits: 0,
-                            suffix: "",
-                            textStyle: TextStyle(fontSize: 30),
-                          ),
+                          FutureBuilder(
+                            future: firestore.collection('transfer').get(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return AnimatedFlipCounter(
+                                  value: snapshot.data!.size,
+                                  fractionDigits: 0,
+                                  suffix: "",
+                                  textStyle: const TextStyle(fontSize: 30),
+                                );
+                              }
+                              return const CircularProgressIndicator();
+                            },
+                          )
                         ],
                       ),
                     ),

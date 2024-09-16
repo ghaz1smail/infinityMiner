@@ -15,8 +15,7 @@ class AdminMessagesScreen extends StatefulWidget {
 class _AdminRequestsScreen extends State<AdminMessagesScreen> {
   final int _limit = 20;
   DocumentSnapshot? _lastDocument;
-  bool _hasMore = true;
-  bool _isLoading = false;
+  bool _hasMore = true, _isLoading = false, firstLoading = true;
   List<MessageModel> _documents = [];
 
   @override
@@ -26,34 +25,39 @@ class _AdminRequestsScreen extends State<AdminMessagesScreen> {
   }
 
   Future<void> _fetchData() async {
-    if (_isLoading) return;
-    setState(() {
-      _isLoading = true;
-    });
-
-    Query query = firestore.collection('contact').limit(_limit);
-
-    if (_lastDocument != null) {
-      query = query.startAfterDocument(_lastDocument!);
-    }
-
-    QuerySnapshot querySnapshot = await query.get();
-
-    if (querySnapshot.docs.isNotEmpty) {
+    if (mounted) {
+      if (_isLoading) return;
       setState(() {
-        _lastDocument = querySnapshot.docs.last;
-        _hasMore = querySnapshot.docs.length == _limit;
-        if (querySnapshot.docs.isNotEmpty) {
-          _documents = querySnapshot.docs
-              .map((m) => MessageModel.fromJson(m.data() as Map))
-              .toList();
-        }
+        _isLoading = true;
       });
-    } else {
-      setState(() {
-        _hasMore = false;
-        _isLoading = false;
-      });
+
+      Query query = firestore.collection('contact').limit(_limit);
+
+      if (_lastDocument != null) {
+        query = query.startAfterDocument(_lastDocument!);
+      }
+
+      QuerySnapshot querySnapshot = await query.get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        setState(() {
+          _lastDocument = querySnapshot.docs.last;
+          _hasMore = querySnapshot.docs.length == _limit;
+          if (querySnapshot.docs.isNotEmpty) {
+            _documents = querySnapshot.docs
+                .map((m) => MessageModel.fromJson(m.data() as Map))
+                .toList();
+          }
+          _isLoading = false;
+          firstLoading = false;
+        });
+      } else {
+        setState(() {
+          _hasMore = false;
+          _isLoading = false;
+          firstLoading = false;
+        });
+      }
     }
   }
 
@@ -63,45 +67,46 @@ class _AdminRequestsScreen extends State<AdminMessagesScreen> {
       appBar: AppBar(
         title: Text('messages'.tr),
       ),
-      body: _documents.isEmpty
-          ? Center(
-              child: Text(
-              'no_data_found'.tr,
-              style: const TextStyle(color: Colors.white),
-            ))
-          : NotificationListener<ScrollNotification>(
-              onNotification: (ScrollNotification scrollInfo) {
-                if (!_isLoading &&
-                    _hasMore &&
-                    scrollInfo.metrics.pixels ==
-                        scrollInfo.metrics.maxScrollExtent) {
-                  _fetchData();
-                }
-                return false;
-              },
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: _documents.length,
-                      itemBuilder: (context, index) {
-                        MessageModel document = _documents[index];
-                        return Card(
-                          child: ListTile(
-                            title: Text(
-                              document.name,
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+      body: firstLoading
+          ? const CustomLoading()
+          : _documents.isEmpty
+              ? Center(
+                  child: Text(
+                  'no_data_found'.tr,
+                  style: const TextStyle(color: Colors.white),
+                ))
+              : NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (!_isLoading &&
+                        _hasMore &&
+                        scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent) {
+                      _fetchData();
+                    }
+                    return false;
+                  },
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _documents.length,
+                          itemBuilder: (context, index) {
+                            MessageModel document = _documents[index];
+                            return Card(
+                              child: ListTile(
+                                title: Text(
+                                  document.name,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      if (_isLoading) const CustomLoading()
+                    ],
                   ),
-                  if (_isLoading) const CustomLoading()
-                ],
-              ),
-            ),
+                ),
     );
   }
 }

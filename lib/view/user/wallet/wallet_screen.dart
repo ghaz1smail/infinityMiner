@@ -75,8 +75,8 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CustomScrollBar(
+    return CustomScrollBar(
+      child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -252,7 +252,10 @@ class _WalletScreenState extends State<WalletScreen> {
                   }
                 },
                 width: 200,
-                color: Colors.blue)
+                color: Colors.blue),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),

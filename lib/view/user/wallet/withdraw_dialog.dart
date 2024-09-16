@@ -19,7 +19,7 @@ class _WithdrawDialogState extends State<WithdrawDialog> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
-    bool isMobile = Get.width < 475;
+    bool isMobile = Get.width < 600;
     return SizedBox(
       height: isMobile ? Get.height : 300,
       width: isMobile ? Get.width : 600,
