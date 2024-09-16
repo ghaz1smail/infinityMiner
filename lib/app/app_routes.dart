@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:infinityminer/view/admin/admin_user_details_screen.dart';
 import 'package:infinityminer/view/admin/admin_acreen.dart';
 import 'package:infinityminer/view/admin/admin_request_details.dart';
 import 'package:infinityminer/view/refer_code/refer_code_screen.dart';
@@ -28,5 +29,7 @@ class AppRoutes {
     GetPage(name: '/refer-code/:userId', page: () => const ReferCodeScreen()),
     GetPage(
         name: '/request-details/:id', page: () => const AdminRequestDetails()),
+    GetPage(
+        name: '/user-details/:uid', page: () => const AdminUserDetailsScreen()),
   ];
 }

@@ -6,6 +6,7 @@ class Languages extends Translations {
         'en': {
           'app_name': 'Infinity Miner',
           'email': 'Email',
+          'users': 'Users',
           'name': 'Name',
           'back': 'Back',
           'username': 'Username',
@@ -85,6 +86,7 @@ class Languages extends Translations {
           'hours': 'Hours',
           'minimum_withdrawl_is_10_USDT': 'Minimum withdrawl is 10 USDT',
           'start_mining': 'Start mining',
+          'add_fund': 'Add fund',
           'daily_income_counter': 'Daily income counter',
           'current_profit': 'Current profit',
           'no_device_yet': 'No device yet',
@@ -92,6 +94,7 @@ class Languages extends Translations {
           'i_would_like_to_withdraw': 'I would like to withdraw',
           'use_friend_code': 'Use friend code',
           'miningRateRange': 'Mining rate range',
+          'got_the_code_prize': 'Got the code prize',
           'subscriptionPrice': 'Subscription Price',
           'please_pick_an_attach_of_your_transfer':
               'Please pick an attach of your transfer',

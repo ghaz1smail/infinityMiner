@@ -23,7 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollBar(
-        child: Column(
+        child: InteractiveViewer(
+            child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Stack(
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             children: [
                               Text(
-                                '${'active_users'.tr}: ${userController.bitCoinPrice.value}',
+                                '${'active_users'.tr}: ',
                                 style: const TextStyle(fontSize: 30),
                               ),
                               Obx(
@@ -120,6 +121,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
-    ));
+    )));
   }
 }

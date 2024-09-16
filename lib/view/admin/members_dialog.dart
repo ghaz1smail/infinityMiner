@@ -4,26 +4,24 @@ import 'package:infinityminer/helper/get_initial.dart';
 import 'package:infinityminer/models/user_model.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
 
-class MembersScreen extends StatefulWidget {
-  const MembersScreen({super.key});
+class MembersDialog extends StatefulWidget {
+  final UserModel userData;
+  const MembersDialog({super.key, required this.userData});
 
   @override
-  State<MembersScreen> createState() => _MembersScreenState();
+  State<MembersDialog> createState() => _MembersDialogState();
 }
 
-class _MembersScreenState extends State<MembersScreen> {
+class _MembersDialogState extends State<MembersDialog> {
   List<UserModel> users = [];
   bool loading = true;
-
   getUsersData() async {
-    if (authController.userData == null) {
-      await authController.getCurrentUserData();
-    }
-    for (var e in authController.userData!.userUsingCode!) {
+    for (var e in widget.userData.userUsingCode!) {
       await firestore.collection('users').doc(e.uid).get().then((t) {
         var x = UserModel.fromJson(t.data() as Map);
-
-        users.add(x);
+        if (!e.status) {
+          users.add(x);
+        }
       });
     }
 
@@ -40,21 +38,28 @@ class _MembersScreenState extends State<MembersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: loading
+    bool isMobile = Get.width < 600;
+    return SizedBox(
+      height: isMobile ? Get.height : 300,
+      width: isMobile ? Get.width : 600,
+      child: loading
           ? const CustomLoading()
           : users.isEmpty
               ? Center(
-                  child: Text(
-                    'no_data_found'.tr,
-                    style: const TextStyle(color: Colors.white),
-                  ),
+                  child: Text('no_data_found'.tr),
                 )
               : ListView.builder(
                   itemCount: users.length,
                   itemBuilder: (context, index) {
                     var user = users[index];
-                    return Chip(label: ListTile(title: Text(user.name)));
+                    return ListTile(
+                      onTap: () {
+                        Get.toNamed('/user-details/${user.uid}');
+                      },
+                      title: Text(
+                        user.name,
+                      ),
+                    );
                   },
                 ),
     );

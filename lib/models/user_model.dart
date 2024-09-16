@@ -26,6 +26,7 @@ class UserModel {
   String lastMining;
   String profit;
   String deviceId;
+  bool gotCodePrize;
 
   UserModel({
     this.username = '',
@@ -55,6 +56,7 @@ class UserModel {
     this.lastMining = '',
     this.profit = '',
     this.deviceId = '',
+    this.gotCodePrize = false,
   });
 
   Map<String, dynamic> toJson() {
@@ -79,12 +81,13 @@ class UserModel {
       'verified': verified,
       'deleted': deleted,
       'timestamp': timestamp,
-      'tags': tags,
-      'userUsingCode': userUsingCode,
+      'tags': tags ?? [],
+      'userUsingCode': userUsingCode ?? [],
       'codeIUse': codeIUse,
       'lastMining': lastMining,
       'profit': profit,
       'deviceId': deviceId,
+      'gotCodePrize': gotCodePrize,
     };
   }
 
@@ -116,8 +119,9 @@ class UserModel {
       codeIUse: json['codeIUse'] ?? '',
       userUsingCode: json['userUsingCode'] ?? [],
       lastMining: json['lastMining'] ?? '',
-      profit: json['profit'] ?? '',
+      profit: json['profit']?.toString() ?? '',
       deviceId: json['deviceId'] ?? '',
+      gotCodePrize: json['gotCodePrize'] ?? false,
     );
   }
 }

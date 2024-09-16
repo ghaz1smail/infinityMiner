@@ -20,6 +20,7 @@ class _WalletScreenState extends State<WalletScreen> {
   Timer? timer;
   bool first = true;
   DateTime timestamp = DateTime.now();
+  String id = DateTime.now().millisecondsSinceEpoch.toString();
 
   timerx() async {
     if (authController.userData!.deviceId.isNotEmpty) {
@@ -36,6 +37,17 @@ class _WalletScreenState extends State<WalletScreen> {
         first = false;
       }
 
+      if (DateTime.now().difference(timestamp).inHours >= 24 &&
+          (profit < counter)) {
+        profit = counter;
+        counter = 0;
+
+        await firestore
+            .collection('users')
+            .doc(authController.userData!.uid)
+            .update({'profit': profit.toString()});
+      }
+
       if (DateTime.now().difference(timestamp).inHours < 24 &&
           authController.userData!.lastMining.isNotEmpty) {
         counter = counter + addingValue;
@@ -44,7 +56,7 @@ class _WalletScreenState extends State<WalletScreen> {
             counter = counter + addingValue;
           });
 
-          if (DateTime.now().difference(timestamp).inHours > 24) {
+          if (DateTime.now().difference(timestamp).inHours >= 24) {
             timer.cancel();
             profit = counter + profit;
             counter = 0;
@@ -53,6 +65,14 @@ class _WalletScreenState extends State<WalletScreen> {
                 .collection('users')
                 .doc(authController.userData!.uid)
                 .update({'profit': profit.toString()});
+
+            firestore.collection('history').doc(id).set({
+              'id': id,
+              'type': 'profit',
+              'amount': profit.toString(),
+              'timestamp': DateTime.now().toIso8601String(),
+              'userData': authController.userData!.toJson(),
+            });
           }
         });
       }

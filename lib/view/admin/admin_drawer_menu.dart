@@ -14,6 +14,17 @@ class AdminDrawerMenu extends StatelessWidget {
           ListTile(
             onTap: () {
               Get.back();
+              adminController.changeSelectedIndex('/users');
+            },
+            title: Text(
+              'users'.tr,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Get.back();
               adminController.changeSelectedIndex('/requests');
             },
             title: Text(

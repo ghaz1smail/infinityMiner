@@ -9,7 +9,7 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   @override
   Widget build(BuildContext context) {
-    bool isMobile = Get.width < 475;
+    bool isMobile = Get.width < 600;
 
     return AppBar(
       title: TextButton(
@@ -38,6 +38,16 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
               )
             ]
           : [
+              TextButton(
+                onPressed: () {
+                  adminController.changeSelectedIndex('/users');
+                },
+                child: Text(
+                  'users'.tr,
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
               TextButton(
                 onPressed: () {
                   adminController.changeSelectedIndex('/requests');

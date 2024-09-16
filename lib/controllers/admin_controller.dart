@@ -12,11 +12,14 @@ class AdminController extends GetxController {
       case '/dashboard':
         selectedIndex.value = 0;
         break;
-      case '/requests':
+      case '/users':
         selectedIndex.value = 1;
         break;
-      case '/messages':
+      case '/requests':
         selectedIndex.value = 2;
+        break;
+      case '/messages':
+        selectedIndex.value = 3;
         break;
     }
     checkUserRoute();

@@ -42,6 +42,7 @@ class _AdminRequestDetailsState extends State<AdminRequestDetails> {
         .update({'status': 'accepted'});
     firestore.collection('history').doc(id).set({
       'id': id,
+      'type': 'device',
       'timestamp': DateTime.now().toIso8601String(),
       'userData': requestData!.userData.toJson(),
       'deviceData': device.toJson(),

@@ -7,6 +7,7 @@ import 'package:infinityminer/view/admin/admin_dashboard_screen.dart';
 import 'package:infinityminer/view/admin/admin_messages_screen.dart';
 import 'package:infinityminer/view/admin/admin_requests_screen.dart';
 import 'package:infinityminer/view/admin/admin_drawer_menu.dart';
+import 'package:infinityminer/view/admin/admin_users_screen.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
 
 class AdminScreen extends StatelessWidget {
@@ -31,6 +32,7 @@ class AdminScreen extends StatelessWidget {
                     index: controller.selectedIndex.value,
                     children: const [
                       AdminDashboardScreen(),
+                      AdminUsersScreen(),
                       AdminRequestsScreen(),
                       AdminMessagesScreen()
                     ],
