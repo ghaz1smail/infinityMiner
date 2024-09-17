@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     userController.getBitCoinPrice();
+    userController.changeUserCount();
     super.initState();
   }
 

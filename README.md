@@ -1,6 +1,6 @@
 # infinityminer
 
-A new Flutter project.
+Cloud Mining.
 
 ## Getting Started
 

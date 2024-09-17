@@ -13,16 +13,11 @@ class UserController extends GetxController {
   bool checking = true;
   RxString bitCoinPrice = ''.obs;
 
-  @override
-  void onInit() {
-    changeUserCount();
-    super.onInit();
-  }
-
   changeUserCount() async {
     Random random = Random();
     await authController.getAppData();
     userCount.value = int.parse(authController.appData!.activeUsers);
+    update();
     Timer.periodic(const Duration(minutes: 1), (c) {
       userCount.value = 200000 + random.nextInt(100000);
       firestore
