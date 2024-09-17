@@ -9,8 +9,12 @@ import 'package:infinityminer/view/widgets/custom_text_field.dart';
 class AddFundDialog extends StatefulWidget {
   final UserModel userData;
   final Function getUserData;
+  final bool codePrize;
   const AddFundDialog(
-      {super.key, required this.userData, required this.getUserData});
+      {super.key,
+      required this.userData,
+      required this.getUserData,
+      this.codePrize = false});
 
   @override
   State<AddFundDialog> createState() => _AddFundDialogState();
@@ -54,7 +58,9 @@ class _AddFundDialogState extends State<AddFundDialog> {
                     .collection('users')
                     .doc(widget.userData.uid)
                     .update({
-                  'profit': FieldValue.increment(double.parse(amount.text)),
+                  'profit':
+                      FieldValue.increment(double.tryParse(amount.text) ?? 0),
+                  if (widget.codePrize) 'gotCodePrize': true
                 });
 
                 widget.getUserData();
@@ -66,6 +72,11 @@ class _AddFundDialogState extends State<AddFundDialog> {
                   'timestamp': DateTime.now().toIso8601String(),
                   'userData': widget.userData.toJson(),
                 });
+
+                setState(() {
+                  loading = false;
+                });
+                amount.clear();
 
                 Get.back();
                 Get.showSnackbar(GetSnackBar(

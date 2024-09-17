@@ -45,7 +45,8 @@ class DeviceDialog extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10),
             child: CustomButton(
-                title: '\$ ${deviceData.subscriptionPrice} ' 'buy',
+                title:
+                    '\$ ${deviceData.subscriptionPrice} ${authController.userData!.deviceId.isEmpty ? 'buy' : 'upgrade'}',
                 function: () {
                   Get.back();
                   customUi.customDialog(BuyDeviceDialog(

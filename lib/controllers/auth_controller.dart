@@ -13,7 +13,8 @@ class AuthController extends GetxController {
   TextEditingController emailController = TextEditingController(),
       passwordController = TextEditingController(),
       fNameController = TextEditingController(),
-      lNameController = TextEditingController();
+      lNameController = TextEditingController(),
+      referCodeController = TextEditingController();
   UserModel? userData;
   bool loading = false, signIn = true, checking = true;
   AppModel? appData;
@@ -41,15 +42,30 @@ class AuthController extends GetxController {
     update();
   }
 
-  Future<UserModel?> getUserData(uid) async {
-    await firestore.collection('users').doc(uid).get().then((value) {
-      if (value.exists) {
-        return UserModel.fromJson(value.data() as Map);
-      } else {
-        return null;
-      }
-    });
-    return null;
+  Future<UserModel?> getUserData(String uid, {bool username = false}) async {
+    if (username) {
+      await firestore
+          .collection('users')
+          .where('username', isEqualTo: uid)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          return UserModel.fromJson(value.docs.first.data() as Map);
+        } else {
+          return null;
+        }
+      });
+      return null;
+    } else {
+      await firestore.collection('users').doc(uid).get().then((value) {
+        if (value.exists) {
+          return UserModel.fromJson(value.data() as Map);
+        } else {
+          return null;
+        }
+      });
+      return null;
+    }
   }
 
   changeMode() {
@@ -200,6 +216,8 @@ class AuthController extends GetxController {
               .collection('users')
               .doc(authController.userData!.uid)
               .update({'codeIUse': user.uid});
+
+          userData!.codeIUse = user.uid;
         }
       });
       referCode = null;
@@ -333,6 +351,9 @@ class AuthController extends GetxController {
 
   createUser() async {
     getStorage.write('uid', firebaseAuth.currentUser!.uid);
+    if (referCodeController.text.isNotEmpty) {
+      referCode = referCodeController.text.trim();
+    }
     userData = UserModel(
       username: await checkUserName(fNameController.text.trim()),
       uid: firebaseAuth.currentUser!.uid,

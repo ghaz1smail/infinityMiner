@@ -90,6 +90,23 @@ class RegisterScreen extends StatelessWidget {
                                     },
                                   ),
                                 ),
+                                if (!controller.signIn)
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    child: CustomTextField(
+                                      hint: 'refer_code',
+                                      controller:
+                                          controller.referCodeController,
+                                      onSubmit: (w) {
+                                        if (controller.signIn) {
+                                          controller.signingInAuth();
+                                        } else {
+                                          controller.signingUpAuth();
+                                        }
+                                      },
+                                    ),
+                                  ),
                                 Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 10),

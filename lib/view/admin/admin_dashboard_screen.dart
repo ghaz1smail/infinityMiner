@@ -45,7 +45,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             ],
                           ),
                           FutureBuilder(
-                            future: firestore.collection('users').get(),
+                            future: firestore
+                                .collection('users')
+                                .where('type', isNotEqualTo: 'admin')
+                                .get(),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 return AnimatedFlipCounter(

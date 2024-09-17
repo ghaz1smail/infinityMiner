@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinityminer/helper/get_initial.dart';
 import 'package:infinityminer/models/user_model.dart';
+import 'package:infinityminer/view/admin/add_fund_dialog.dart';
+import 'package:infinityminer/view/widgets/custom_button.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
 
 class MembersDialog extends StatefulWidget {
@@ -15,13 +17,12 @@ class MembersDialog extends StatefulWidget {
 class _MembersDialogState extends State<MembersDialog> {
   List<UserModel> users = [];
   bool loading = true;
+
   getUsersData() async {
-    for (var e in widget.userData.userUsingCode!) {
-      await firestore.collection('users').doc(e.uid).get().then((t) {
+    for (String e in widget.userData.userUsingCode!) {
+      await firestore.collection('users').doc(e).get().then((t) {
         var x = UserModel.fromJson(t.data() as Map);
-        if (!e.status) {
-          users.add(x);
-        }
+        users.add(x);
       });
     }
 
@@ -48,7 +49,8 @@ class _MembersDialogState extends State<MembersDialog> {
               ? Center(
                   child: Text('no_data_found'.tr),
                 )
-              : ListView.builder(
+              : ListView.separated(
+                  separatorBuilder: (context, index) => const Divider(),
                   itemCount: users.length,
                   itemBuilder: (context, index) {
                     var user = users[index];
@@ -59,6 +61,21 @@ class _MembersDialogState extends State<MembersDialog> {
                       title: Text(
                         user.name,
                       ),
+                      trailing: user.gotCodePrize
+                          ? null
+                          : CustomButton(
+                              title: 'add_fund',
+                              function: () {
+                                customUi.customDialog(AddFundDialog(
+                                  userData: user,
+                                  getUserData: () {},
+                                  codePrize: true,
+                                ));
+                              },
+                              size: 14,
+                              width: 100,
+                              height: 30,
+                              color: appTheme.primaryColor),
                     );
                   },
                 ),

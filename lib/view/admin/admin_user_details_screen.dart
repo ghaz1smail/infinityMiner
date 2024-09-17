@@ -156,18 +156,6 @@ class _AdminUserDetailsScreenState extends State<AdminUserDetailsScreen> {
                       },
                       width: 200,
                       color: appTheme.primaryColor),
-                  if (!userData!.gotCodePrize)
-                    CustomButton(
-                        title: 'got_the_code_prize',
-                        function: () async {
-                          await firestore
-                              .collection('users')
-                              .doc(userData!.uid)
-                              .update({'gotCodePrize': true});
-                          getUserData(updating: true);
-                        },
-                        width: 200,
-                        color: appTheme.primaryColor)
                 ],
               ),
             )),

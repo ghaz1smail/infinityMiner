@@ -25,24 +25,45 @@ class _MiningDevicesScreenState extends State<MiningDevicesScreen> {
   Widget build(BuildContext context) {
     bool isMobile = Get.width < 600;
     return Scaffold(
-        body: CustomScrollBar(
-      child: GridView.builder(
-        padding: const EdgeInsets.all(10),
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: isMobile ? 2 : 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: isMobile ? 1 : 1.5,
-        ),
-        itemCount: appData.miningPlans.length,
-        itemBuilder: (context, index) {
-          final device = appData.miningPlans[index];
-          return buildDeviceTile(device);
-        },
-      ),
-    ));
+        body: appData.miningPlans
+                .where((w) =>
+                    int.parse(w.id) >
+                    (int.tryParse(authController.userData!.deviceId) ?? 0))
+                .isEmpty
+            ? Center(
+                child: Text(
+                  'no_data_found'.tr,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              )
+            : CustomScrollBar(
+                child: GridView.builder(
+                  padding: const EdgeInsets.all(10),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: isMobile ? 2 : 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: isMobile ? 1 : 1.5,
+                  ),
+                  itemCount: appData.miningPlans
+                      .where((w) =>
+                          int.parse(w.id) >
+                          (int.tryParse(authController.userData!.deviceId) ??
+                              0))
+                      .length,
+                  itemBuilder: (context, index) {
+                    final device = appData.miningPlans
+                        .where((w) =>
+                            int.parse(w.id) >
+                            (int.tryParse(authController.userData!.deviceId) ??
+                                0))
+                        .toList()[index];
+                    return buildDeviceTile(device);
+                  },
+                ),
+              ));
   }
 }
 

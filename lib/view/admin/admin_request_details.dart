@@ -49,9 +49,10 @@ class _AdminRequestDetailsState extends State<AdminRequestDetails> {
       'requestData': requestData!.toJson(),
     });
 
-    firestore.collection('users').doc(requestData!.userData.uid).update({
-      'deviceId': device.id,
-    });
+    firestore
+        .collection('users')
+        .doc(requestData!.userData.uid)
+        .update({'deviceId': device.id, 'lastMining': ''});
     getRequestData();
   }
 
