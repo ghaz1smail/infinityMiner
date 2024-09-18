@@ -55,16 +55,15 @@ class _WalletScreenState extends State<WalletScreen> {
           .miningRate;
       addingValue = (((mineRate / 30) / 24) / 60) / 60;
       counter = (addingValue * DateTime.now().difference(timestamp).inSeconds);
-      if (DateTime.now().difference(timestamp).inMinutes >= 1 &&
+      if (DateTime.now().difference(timestamp).inHours >= 24 &&
           authController.userData!.lastMining.isNotEmpty) {
-        Get.log('wqqwd');
         await getProfit();
         counter = 0;
       }
-      setState(() {
-        loading = false;
-      });
     }
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -200,7 +199,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   const SizedBox(
                     height: 30,
                   ),
-                  DateTime.now().difference(timestamp).inMinutes <= 1 &&
+                  DateTime.now().difference(timestamp).inHours <= 24 &&
                           authController.userData!.lastMining.isNotEmpty
                       ? Chip(
                           label: Row(
@@ -225,7 +224,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                     }
                                   },
                                   duration: timestamp
-                                      .add(const Duration(minutes: 1))
+                                      .add(const Duration(hours: 24))
                                       .difference(
                                         DateTime.now(),
                                       ))

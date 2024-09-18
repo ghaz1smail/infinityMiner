@@ -28,7 +28,9 @@ class _AdminUserDetailsScreenState extends State<AdminUserDetailsScreen> {
       });
     }
     await firestore.collection('users').doc(id).get().then((doc) {
-      userData = UserModel.fromJson(doc.data() as Map);
+      if (doc.exists) {
+        userData = UserModel.fromJson(doc.data() as Map);
+      }
     });
     setState(() {
       loading = false;
@@ -37,6 +39,7 @@ class _AdminUserDetailsScreenState extends State<AdminUserDetailsScreen> {
 
   @override
   void initState() {
+    adminController.checkUserRoute();
     getUserData();
     super.initState();
   }

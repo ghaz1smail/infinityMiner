@@ -28,7 +28,7 @@ class _MiningDevicesScreenState extends State<MiningDevicesScreen> {
         body: appData.miningPlans
                 .where((w) =>
                     int.parse(w.id) >
-                    (int.tryParse(authController.userData!.deviceId) ?? 0))
+                    (int.tryParse(authController.userData!.deviceId) ?? -1))
                 .isEmpty
             ? Center(
                 child: Text(
@@ -51,14 +51,14 @@ class _MiningDevicesScreenState extends State<MiningDevicesScreen> {
                       .where((w) =>
                           int.parse(w.id) >
                           (int.tryParse(authController.userData!.deviceId) ??
-                              0))
+                              -1))
                       .length,
                   itemBuilder: (context, index) {
                     final device = appData.miningPlans
                         .where((w) =>
                             int.parse(w.id) >
                             (int.tryParse(authController.userData!.deviceId) ??
-                                0))
+                                -1))
                         .toList()[index];
                     return buildDeviceTile(device);
                   },

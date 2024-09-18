@@ -47,7 +47,7 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '@${authController.userData!.username}  |  ',
+                    'My referral code: ${authController.userData!.username}  |  ',
                     style: const TextStyle(color: Colors.white),
                   ),
                   InkWell(

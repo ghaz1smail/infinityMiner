@@ -25,7 +25,9 @@ class _AdminRequestDetailsState extends State<AdminRequestDetails> {
 
   getRequestData() async {
     await firestore.collection('transfer').doc(id).get().then((doc) {
-      requestData = RequestModel.fromJson(doc.data() as Map);
+      if (doc.exists) {
+        requestData = RequestModel.fromJson(doc.data() as Map);
+      }
     });
     setState(() {
       loading = false;
@@ -58,6 +60,7 @@ class _AdminRequestDetailsState extends State<AdminRequestDetails> {
 
   @override
   void initState() {
+    adminController.checkUserRoute();
     getRequestData();
     super.initState();
   }
