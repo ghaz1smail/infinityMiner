@@ -99,7 +99,7 @@ class _BuyDeviceDialogState extends State<BuyDeviceDialog> {
   Widget build(BuildContext context) {
     bool isMobile = Get.width < 600;
     return SizedBox(
-      height: isMobile ? Get.height : 300,
+      height: isMobile ? Get.height : 400,
       width: isMobile ? Get.width : 600,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -114,33 +114,55 @@ class _BuyDeviceDialogState extends State<BuyDeviceDialog> {
               textAlign: TextAlign.center,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Text(
-                  authController.appData!.wallet,
-                ),
-                const SizedBox(width: 5),
-                IconButton(
-                    onPressed: () {
-                      Clipboard.setData(
-                          ClipboardData(text: authController.appData!.wallet));
-                      Get.showSnackbar(GetSnackBar(
-                        margin: const EdgeInsets.all(20),
-                        message: 'wallet_address_copied_to_clipboard'.tr,
-                        duration: const Duration(seconds: 5),
-                        borderRadius: 20,
-                      ));
-                    },
-                    icon: Icon(
-                      Icons.copy,
-                      size: 16,
-                      color: appTheme.primaryColor,
-                    ))
-              ],
-            ),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                'wallet address: ${authController.appData!.wallet}',
+              ),
+              const SizedBox(width: 5),
+              IconButton(
+                  onPressed: () {
+                    Clipboard.setData(
+                        ClipboardData(text: authController.appData!.wallet));
+                    Get.showSnackbar(GetSnackBar(
+                      margin: const EdgeInsets.all(20),
+                      message: 'wallet_address_copied_to_clipboard'.tr,
+                      duration: const Duration(seconds: 5),
+                      borderRadius: 20,
+                    ));
+                  },
+                  icon: Icon(
+                    Icons.copy,
+                    size: 16,
+                    color: appTheme.primaryColor,
+                  ))
+            ],
+          ),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                'network: ${authController.appData!.network}',
+              ),
+              const SizedBox(width: 5),
+              IconButton(
+                  onPressed: () {
+                    Clipboard.setData(
+                        ClipboardData(text: authController.appData!.network));
+                    Get.showSnackbar(GetSnackBar(
+                      margin: const EdgeInsets.all(20),
+                      message: 'wallet_address_copied_to_clipboard'.tr,
+                      duration: const Duration(seconds: 5),
+                      borderRadius: 20,
+                    ));
+                  },
+                  icon: Icon(
+                    Icons.copy,
+                    size: 16,
+                    color: appTheme.primaryColor,
+                  ))
+            ],
           ),
           attachFile == null
               ? Padding(
