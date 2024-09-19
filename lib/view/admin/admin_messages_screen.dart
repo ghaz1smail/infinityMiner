@@ -1,65 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinityminer/helper/get_initial.dart';
 import 'package:infinityminer/models/message_model.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
+import 'package:paginate_firestore_plus/paginate_firestore.dart';
 
-class AdminMessagesScreen extends StatefulWidget {
+class AdminMessagesScreen extends StatelessWidget {
   const AdminMessagesScreen({super.key});
-
-  @override
-  State<AdminMessagesScreen> createState() => _AdminRequestsScreen();
-}
-
-class _AdminRequestsScreen extends State<AdminMessagesScreen> {
-  final int _limit = 20;
-  DocumentSnapshot? _lastDocument;
-  bool _hasMore = true, _isLoading = false, firstLoading = true;
-  List<MessageModel> _documents = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchData();
-  }
-
-  Future<void> _fetchData() async {
-    if (mounted) {
-      if (_isLoading) return;
-      setState(() {
-        _isLoading = true;
-      });
-
-      Query query = firestore.collection('contact').limit(_limit);
-
-      if (_lastDocument != null) {
-        query = query.startAfterDocument(_lastDocument!);
-      }
-
-      QuerySnapshot querySnapshot = await query.get();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        setState(() {
-          _lastDocument = querySnapshot.docs.last;
-          _hasMore = querySnapshot.docs.length == _limit;
-          if (querySnapshot.docs.isNotEmpty) {
-            _documents = querySnapshot.docs
-                .map((m) => MessageModel.fromJson(m.data() as Map))
-                .toList();
-          }
-          _isLoading = false;
-          firstLoading = false;
-        });
-      } else {
-        setState(() {
-          _hasMore = false;
-          _isLoading = false;
-          firstLoading = false;
-        });
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,46 +14,30 @@ class _AdminRequestsScreen extends State<AdminMessagesScreen> {
       appBar: AppBar(
         title: Text('messages'.tr),
       ),
-      body: firstLoading
-          ? const CustomLoading()
-          : _documents.isEmpty
-              ? Center(
-                  child: Text(
-                  'no_data_found'.tr,
-                  style: const TextStyle(color: Colors.white),
-                ))
-              : NotificationListener<ScrollNotification>(
-                  onNotification: (ScrollNotification scrollInfo) {
-                    if (!_isLoading &&
-                        _hasMore &&
-                        scrollInfo.metrics.pixels ==
-                            scrollInfo.metrics.maxScrollExtent) {
-                      _fetchData();
-                    }
-                    return false;
-                  },
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _documents.length,
-                          itemBuilder: (context, index) {
-                            MessageModel document = _documents[index];
-                            return Card(
-                              child: ListTile(
-                                title: Text(
-                                  document.name,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      if (_isLoading) const CustomLoading()
-                    ],
-                  ),
-                ),
+      body: PaginateFirestore(
+        onEmpty: Center(
+            child: Text(
+          'no_data_found'.tr,
+          style: const TextStyle(color: Colors.white),
+        )),
+        initialLoader: const CustomLoading(),
+        itemBuilder: (context, documentSnapshots, index) {
+          MessageModel document =
+              MessageModel.fromJson(documentSnapshots[index].data() as Map);
+          return Card(
+            child: ListTile(
+              onTap: () {
+                Get.toNamed('/message-details/${document.id}');
+              },
+              title: Text(
+                document.name,
+              ),
+            ),
+          );
+        },
+        query: FirebaseFirestore.instance.collection('contact'),
+        itemBuilderType: PaginateBuilderType.listView,
+      ),
     );
   }
 }

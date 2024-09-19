@@ -6,6 +6,7 @@ class MessageModel {
   final String message;
   final String email;
   final String uid;
+  final String status;
 
   MessageModel({
     required this.id,
@@ -15,6 +16,7 @@ class MessageModel {
     required this.message,
     required this.email,
     required this.uid,
+    required this.status,
   });
 
   factory MessageModel.fromJson(Map json) {
@@ -26,6 +28,7 @@ class MessageModel {
       name: json['name'],
       email: json['email'],
       uid: json['uid'],
+      status: json['status'] ?? 'pending',
     );
   }
 
@@ -38,6 +41,7 @@ class MessageModel {
       'name': name,
       'email': email,
       'uid': uid,
+      'status': status,
     };
   }
 }

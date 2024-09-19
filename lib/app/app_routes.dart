@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:infinityminer/view/admin/admin_message_details.dart';
 import 'package:infinityminer/view/admin/admin_user_details_screen.dart';
 import 'package:infinityminer/view/admin/admin_acreen.dart';
 import 'package:infinityminer/view/admin/admin_request_details.dart';
 import 'package:infinityminer/view/refer_code/refer_code_screen.dart';
+import 'package:infinityminer/view/register/privacy_policy_screen.dart';
 import 'package:infinityminer/view/user/contact_us/contact_us_screen.dart';
 import 'package:infinityminer/view/user/devices/mining_devices_screen.dart';
 import 'package:infinityminer/view/register/forget_screen.dart';
@@ -21,6 +23,10 @@ class AppRoutes {
       name: '/admin',
       page: () => const AdminScreen(),
     ),
+    GetPage(
+      name: '/privacy-policy',
+      page: () => const PrivacyPolicyScreen(),
+    ),
     GetPage(name: '/fogot-password', page: () => const ForgetScreen()),
     GetPage(name: '/mining-devices', page: () => const MiningDevicesScreen()),
     GetPage(name: '/wallet', page: () => const WalletScreen()),
@@ -31,5 +37,8 @@ class AppRoutes {
         name: '/request-details/:id', page: () => const AdminRequestDetails()),
     GetPage(
         name: '/user-details/:uid', page: () => const AdminUserDetailsScreen()),
+    GetPage(
+        name: '/message-details/:id',
+        page: () => const AdminMessageDetailsScreen()),
   ];
 }

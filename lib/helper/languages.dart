@@ -95,8 +95,10 @@ class Languages extends Translations {
           'refer_code': 'Refer code',
           'i_would_like_to_withdraw': 'I would like to withdraw',
           'use_friend_code': 'Use friend code',
+          'privacy_policy': 'Privacy policy',
           'miningRateRange': 'Mining rate range',
           'got_the_code_prize': 'Got the code prize',
+          'by_logging_in_you_accept_our': 'By logging in you accept our',
           'subscriptionPrice': 'Subscription Price',
           'please_pick_an_attach_of_your_transfer':
               'Please pick an attach of your transfer',

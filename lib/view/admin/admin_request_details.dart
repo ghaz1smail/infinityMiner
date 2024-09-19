@@ -6,6 +6,7 @@ import 'package:infinityminer/models/request_model.dart';
 import 'package:infinityminer/view/admin/select_device_dialog.dart';
 import 'package:infinityminer/view/widgets/cached_network_image.dart';
 import 'package:infinityminer/view/widgets/custom_button.dart';
+import 'package:infinityminer/view/widgets/custom_chip.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
 import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
 import 'package:infinityminer/view/widgets/full_screen.dart';
@@ -98,31 +99,25 @@ class _AdminRequestDetailsState extends State<AdminRequestDetails> {
                     runSpacing: 20,
                     spacing: 20,
                     children: [
-                      Chip(
-                        label: Text(
-                          '${'name'.tr}: ${requestData!.userData.name}',
-                          style: const TextStyle(fontSize: 20),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(
+                              '/user-details/${requestData!.userData.uid}');
+                        },
+                        child: CustomChip(
+                          title: '${'name'.tr}: ${requestData!.userData.name}',
                         ),
                       ),
-                      Chip(
-                        label: Text(
-                          '${'username'.tr}: ${requestData!.userData.username}',
-                          style: const TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
+                      CustomChip(
+                        title:
+                            '${'username'.tr}: ${requestData!.userData.username}',
                       ),
-                      Chip(
-                        label: Text(
-                          '${'email'.tr}: ${requestData!.userData.email}',
-                          style: const TextStyle(fontSize: 20),
-                        ),
+                      CustomChip(
+                        title: '${'email'.tr}: ${requestData!.userData.email}',
                       ),
-                      Chip(
-                        label: Text(
-                          '${'date_time'.tr}: ${DateFormat('yyyy-MM-dd | hh:mm').format(DateTime.parse(requestData!.timestamp))}',
-                          style: const TextStyle(fontSize: 20),
-                        ),
+                      CustomChip(
+                        title:
+                            '${'date_time'.tr}: ${DateFormat('yyyy-MM-dd | hh:mm').format(DateTime.parse(requestData!.timestamp))}',
                       ),
                     ],
                   ),
@@ -160,13 +155,9 @@ class _AdminRequestDetailsState extends State<AdminRequestDetails> {
                         .entries
                         .map((m) =>
                             m.key == 'name' || m.key == 'subscriptionPrice'
-                                ? Chip(
-                                    label: Text(
-                                      '${m.key.tr}: ${m.value} ${m.key == 'subscriptionPrice' ? ' \$' : ''}',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                      ),
-                                    ),
+                                ? CustomChip(
+                                    title:
+                                        '${m.key.tr}: ${m.value} ${m.key == 'subscriptionPrice' ? ' \$' : ''}',
                                   )
                                 : const SizedBox())
                         .toList(),

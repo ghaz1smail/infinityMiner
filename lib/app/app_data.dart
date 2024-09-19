@@ -93,4 +93,34 @@ class AppData {
         description:
             'One of the most powerful miners available, perfect for expert-level users aiming for maximum returns on investment.'),
   ];
+
+  String termsAndConditions = """
+Terms and Conditions for Infinityminer.net
+
+1. Acceptance of Terms
+By accessing and using Infinityminer.net, you agree to comply with these Terms and Conditions. If you do not agree, please refrain from using our services.
+
+2. Services Offered
+Infinityminer.net provides cloud mining services where users can purchase mining power. Our services include the operation of mining hardware to generate cryptocurrencies.
+
+3. Earnings Disclaimer
+The earnings mentioned on our website are not a guarantee of profit. They are based on our operation of mining equipment. In the event of a cessation of mining activity or a decline in the price of Bitcoin, your earnings may decrease or cease altogether.
+
+4. User Responsibilities
+Users are responsible for maintaining the confidentiality of their account information and for all activities conducted under their accounts. You agree to notify us immediately of any unauthorized use of your account.
+
+5. Modifications to Services
+Infinityminer.net reserves the right to modify or discontinue its services at any time without prior notice. We will not be liable for any modifications or discontinuation of services.
+
+6. Limitation of Liability
+Infinityminer.net is not responsible for any losses or damages arising from the use of our services, including but not limited to financial losses resulting from fluctuations in cryptocurrency prices.
+
+7. Governing Law
+These Terms and Conditions shall be governed by and construed in accordance with the laws applicable in the jurisdiction in which Infinityminer.net operates.
+
+8. Changes to Terms
+We may update these Terms and Conditions from time to time. Any changes will be posted on this page with an updated effective date.
+
+By using our services, you acknowledge that you have read, understood, and agree to these Terms and Conditions.
+""";
 }

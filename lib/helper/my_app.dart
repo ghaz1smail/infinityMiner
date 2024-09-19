@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:infinityminer/helper/get_initial.dart';
 import 'package:infinityminer/helper/languages.dart';
@@ -11,23 +10,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      builder: (context, child) => GetMaterialApp(
-        builder: (context, child) {
-          return MediaQuery(
-            data: MediaQuery.of(context)
-                .copyWith(textScaler: const TextScaler.linear(1.0)),
-            child: child!,
-          );
-        },
-        defaultTransition: Transition.noTransition,
-        getPages: AppRoutes().pagesRoutes,
-        locale: const Locale('en'),
-        translations: Languages(),
-        theme: appTheme.theme,
-        debugShowCheckedModeBanner: false,
-      ),
+    return GetMaterialApp(
+      // builder: (context, child) => ResponsiveBreakpoints.builder(
+      //   child: child!,
+      //   breakpoints: [
+      //     const Breakpoint(start: 0, end: 450, name: MOBILE),
+      //     const Breakpoint(start: 451, end: 800, name: TABLET),
+      //     const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+      //     const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+      //   ],
+      // ),
+      defaultTransition: Transition.noTransition,
+      getPages: AppRoutes().pagesRoutes,
+      locale: const Locale('en'),
+      translations: Languages(),
+      theme: appTheme.theme,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

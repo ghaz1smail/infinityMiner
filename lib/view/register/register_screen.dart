@@ -128,6 +128,31 @@ class RegisterScreen extends StatelessWidget {
                                     width: Get.width,
                                   ),
                                 ),
+                                InkWell(
+                                  onTap: () {
+                                    Get.toNamed('/privacy-policy');
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        'by_logging_in_you_accept_our'.tr,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'privacy_policy'.tr,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: appTheme.primaryColor),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 if (!controller.loading && controller.signIn)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 15),

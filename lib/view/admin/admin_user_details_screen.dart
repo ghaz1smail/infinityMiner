@@ -6,6 +6,7 @@ import 'package:infinityminer/view/admin/add_fund_dialog.dart';
 import 'package:infinityminer/view/admin/members_dialog.dart';
 import 'package:infinityminer/view/user/devices/mining_devices_screen.dart';
 import 'package:infinityminer/view/widgets/custom_button.dart';
+import 'package:infinityminer/view/widgets/custom_chip.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
 import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
 
@@ -56,23 +57,14 @@ class _AdminUserDetailsScreenState extends State<AdminUserDetailsScreen> {
                 runSpacing: 20,
                 spacing: 20,
                 children: [
-                  Chip(
-                    label: Text(
-                      '${'name'.tr}: ${userData!.name}',
-                      style: const TextStyle(fontSize: 20),
-                    ),
+                  CustomChip(
+                    title: '${'name'.tr}: ${userData!.name}',
                   ),
-                  Chip(
-                    label: Text(
-                      '${'email'.tr}: ${userData!.email}',
-                      style: const TextStyle(fontSize: 20),
-                    ),
+                  CustomChip(
+                    title: '${'username'.tr}: ${userData!.username}',
                   ),
-                  Chip(
-                    label: Text(
-                      '${'email'.tr}: ${userData!.email}',
-                      style: const TextStyle(fontSize: 20),
-                    ),
+                  CustomChip(
+                    title: '${'email'.tr}: ${userData!.email}',
                   ),
                   GestureDetector(
                     onTap: () {

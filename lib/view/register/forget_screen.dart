@@ -31,8 +31,8 @@ class ForgetScreen extends StatelessWidget {
                           color: Colors.white10,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                  width: isMobile ? null : 500,
-                  height: isMobile ? null : 600,
+                  width: isMobile ? Get.width : 500,
+                  height: isMobile ? Get.height : 600,
                   child: Column(
                     children: [
                       Image.asset(assets.logo, height: 100, width: 100),
