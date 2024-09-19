@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinityminer/helper/get_initial.dart';
-import 'package:infinityminer/models/message_model.dart';
+import 'package:infinityminer/models/contact_model.dart';
 import 'package:infinityminer/view/widgets/custom_button.dart';
 import 'package:infinityminer/view/widgets/custom_chip.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
 import 'package:infinityminer/view/widgets/custom_scroll_bar.dart';
-import 'package:emailjs/emailjs.dart' as emailjs;
 
 class AdminMessageDetailsScreen extends StatefulWidget {
   const AdminMessageDetailsScreen({super.key});
@@ -18,8 +17,9 @@ class AdminMessageDetailsScreen extends StatefulWidget {
 
 class _AdminMessageDetailsScreenState extends State<AdminMessageDetailsScreen> {
   final id = Get.parameters['id'];
-  bool loading = true;
-  MessageModel? messageData;
+  bool loading = true, sending = false;
+  ContactModel? messageData;
+  TextEditingController messageController = TextEditingController();
 
   getUserData({updating = false}) async {
     if (updating) {
@@ -29,7 +29,7 @@ class _AdminMessageDetailsScreenState extends State<AdminMessageDetailsScreen> {
     }
     await firestore.collection('contact').doc(id).get().then((doc) {
       if (doc.exists) {
-        messageData = MessageModel.fromJson(doc.data() as Map);
+        messageData = ContactModel.fromJson(doc.data() as Map);
       }
     });
     setState(() {
@@ -42,28 +42,6 @@ class _AdminMessageDetailsScreenState extends State<AdminMessageDetailsScreen> {
     adminController.checkUserRoute();
     getUserData();
     super.initState();
-  }
-
-  Future<bool> sendEmail(dynamic templateParams) async {
-    try {
-      await emailjs.send(
-        'service_9fgjbwt',
-        'template_qvq4z2h',
-        templateParams,
-        const emailjs.Options(
-          publicKey: '0CwPL1mCMK-zej4Kh',
-          privateKey: '6KjB_xxiZBWbyLGkEopem',
-        ),
-      );
-      print('SUCCESS!');
-      return true;
-    } catch (error) {
-      if (error is emailjs.EmailJSResponseStatus) {
-        print('ERROR... ${error.status}: ${error.text}');
-      }
-      print(error.toString());
-      return false;
-    }
   }
 
   @override
@@ -87,17 +65,49 @@ class _AdminMessageDetailsScreenState extends State<AdminMessageDetailsScreen> {
                   CustomChip(
                     title: '${'message'.tr}: ${messageData!.message}',
                   ),
+                  const Divider(
+                    color: Colors.white,
+                  ),
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextField(
+                        controller: messageController,
+                        keyboardType: TextInputType.multiline,
+                        maxLines: 5,
+                        minLines: 1,
+                        decoration: const InputDecoration(
+                            hintText: 'message', border: InputBorder.none),
+                      ),
+                    ),
+                  ),
                   CustomButton(
                       title: 'send',
-                      function: () {
-                        sendEmail(
-                          {
-                            'to_email': 'gh0zism0il@gmail.com',
-                            'message': 'Hi',
-                          },
-                        );
+                      function: () async {
+                        String id =
+                            DateTime.now().millisecondsSinceEpoch.toString();
+
+                        setState(() {
+                          sending = true;
+                        });
+                        await firestore.collection('messages').doc(id).set({
+                          'id': id,
+                          'message': messageController.text,
+                          'contactId': messageData!.id,
+                          'contactMessage': messageData!.message,
+                          'status': 'pending',
+                          'uid': messageData!.uid,
+                          'timestamp': DateTime.now().toIso8601String()
+                        });
+
+                        messageController.clear();
+
+                        setState(() {
+                          sending = false;
+                        });
                       },
                       width: 200,
+                      loading: sending,
                       color: appTheme.primaryColor)
                 ],
               ),

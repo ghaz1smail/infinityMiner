@@ -31,7 +31,6 @@ dependencies:
   slide_countdown: ^1.6.1
   responsive_framework: ^1.5.1
   paginate_firestore_plus: ^1.0.1+2
-  emailjs: ^4.0.0
 
 dev_dependencies:
   flutter_test:

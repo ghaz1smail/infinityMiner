@@ -6,6 +6,7 @@ import 'package:infinityminer/view/admin/admin_request_details.dart';
 import 'package:infinityminer/view/refer_code/refer_code_screen.dart';
 import 'package:infinityminer/view/register/privacy_policy_screen.dart';
 import 'package:infinityminer/view/user/contact_us/contact_us_screen.dart';
+import 'package:infinityminer/view/user/contact_us/replies_screen.dart';
 import 'package:infinityminer/view/user/devices/mining_devices_screen.dart';
 import 'package:infinityminer/view/register/forget_screen.dart';
 import 'package:infinityminer/view/register/register_screen.dart';
@@ -26,6 +27,10 @@ class AppRoutes {
     GetPage(
       name: '/privacy-policy',
       page: () => const PrivacyPolicyScreen(),
+    ),
+    GetPage(
+      name: '/replies',
+      page: () => const RepliesScreen(),
     ),
     GetPage(name: '/fogot-password', page: () => const ForgetScreen()),
     GetPage(name: '/mining-devices', page: () => const MiningDevicesScreen()),

@@ -250,7 +250,21 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   width: 50,
                   loading: loading,
                   color: appTheme.primaryColor,
-                )
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Align(
+                  child: CustomButton(
+                    title: 'show_replies',
+                    function: () {
+                      Get.toNamed('/replies');
+                    },
+                    width: 200,
+                    loading: loading,
+                    color: appTheme.primaryColor,
+                  ),
+                ),
               ],
             ),
           ),

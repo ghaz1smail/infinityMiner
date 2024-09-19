@@ -1,47 +1,45 @@
 class MessageModel {
   final String id;
-  final String timestamp;
-  final String name;
-  final String attachFile;
   final String message;
-  final String email;
-  final String uid;
+  final String contactId;
+  final String contactMessage;
   final String status;
+  final String uid;
+  final String timestamp;
 
   MessageModel({
     required this.id,
-    required this.timestamp,
-    required this.name,
-    required this.attachFile,
     required this.message,
-    required this.email,
-    required this.uid,
+    required this.contactId,
+    required this.contactMessage,
     required this.status,
+    required this.uid,
+    required this.timestamp,
   });
 
-  factory MessageModel.fromJson(Map json) {
+  // Factory constructor to create a Message instance from a map
+  factory MessageModel.fromMap(Map map) {
     return MessageModel(
-      id: json['id'],
-      timestamp: json['timestamp'],
-      message: json['message'],
-      attachFile: json['attachFile'] ?? '',
-      name: json['name'],
-      email: json['email'],
-      uid: json['uid'],
-      status: json['status'] ?? 'pending',
+      id: map['id'],
+      message: map['message'],
+      contactId: map['contactId'],
+      contactMessage: map['contactMessage'],
+      status: map['status'],
+      uid: map['uid'],
+      timestamp: map['timestamp'],
     );
   }
 
-  Map<String, dynamic> toJson() {
+  // Method to convert a Message instance to a map
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'timestamp': timestamp,
-      'deviceData': message,
-      'attachFile': attachFile,
-      'name': name,
-      'email': email,
-      'uid': uid,
+      'message': message,
+      'contactId': contactId,
+      'contactMessage': contactMessage,
       'status': status,
+      'uid': uid,
+      'timestamp': timestamp,
     };
   }
 }

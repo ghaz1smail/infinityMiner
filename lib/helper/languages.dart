@@ -93,6 +93,7 @@ class Languages extends Translations {
           'no_device_yet': 'No device yet',
           'current_device': 'Current device',
           'refer_code': 'Refer code',
+          'show_replies': 'Show replies',
           'i_would_like_to_withdraw': 'I would like to withdraw',
           'use_friend_code': 'Use friend code',
           'privacy_policy': 'Privacy policy',
