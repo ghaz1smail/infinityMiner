@@ -58,14 +58,12 @@ class _AdminWithdrawDetailsScreenState
                 runSpacing: 20,
                 spacing: 20,
                 children: [
-                  GestureDetector(
+                  CustomChip(
+                    title: '${'name'.tr}: ${withdrawData!.userData.name}',
                     onTap: () {
                       Get.toNamed(
                           '/user-details/${withdrawData!.userData.uid}');
                     },
-                    child: CustomChip(
-                      title: '${'name'.tr}: ${withdrawData!.userData.name}',
-                    ),
                   ),
                   CustomChip(
                     title: '${'amount'.tr}: ${withdrawData!.amount}',

@@ -57,6 +57,7 @@ class _WithdrawDialogState extends State<WithdrawDialog> {
                 if ((double.tryParse(amount.text) ?? 0) >
                     (double.tryParse(authController.userData!.profit) ?? 0)) {
                   customUi.showToastMessage('dont_have_enough_amount');
+                  return;
                 }
 
                 setState(() {

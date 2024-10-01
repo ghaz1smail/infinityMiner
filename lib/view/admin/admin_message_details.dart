@@ -58,6 +58,9 @@ class _AdminMessageDetailsScreenState extends State<AdminMessageDetailsScreen> {
                 children: [
                   CustomChip(
                     title: '${'name'.tr}: ${messageData!.name}',
+                    onTap: () {
+                      Get.toNamed('/user-details/${messageData!.uid}');
+                    },
                   ),
                   CustomChip(
                     title: '${'email'.tr}: ${messageData!.email}',

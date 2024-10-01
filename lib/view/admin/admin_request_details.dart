@@ -99,14 +99,12 @@ class _AdminRequestDetailsState extends State<AdminRequestDetails> {
                     runSpacing: 20,
                     spacing: 20,
                     children: [
-                      GestureDetector(
+                      CustomChip(
+                        title: '${'name'.tr}: ${requestData!.userData.name}',
                         onTap: () {
                           Get.toNamed(
                               '/user-details/${requestData!.userData.uid}');
                         },
-                        child: CustomChip(
-                          title: '${'name'.tr}: ${requestData!.userData.name}',
-                        ),
                       ),
                       CustomChip(
                         title:
