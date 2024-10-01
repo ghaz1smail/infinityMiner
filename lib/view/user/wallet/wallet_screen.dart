@@ -253,9 +253,19 @@ class _WalletScreenState extends State<WalletScreen> {
                   ),
                   CustomButton(
                       title: 'withdraw',
-                      function: () {
+                      function: () async {
                         if (profit >= 10) {
-                          customUi.customDialog(const WithdrawDialog());
+                          await firestore
+                              .collection('withdraw')
+                              .where('userData.uid',
+                                  isEqualTo: authController.userData!.uid)
+                              .where('status', isEqualTo: 'pending')
+                              .get()
+                              .then((t) {
+                            if (t.size == 0) {
+                              customUi.customDialog(const WithdrawDialog());
+                            }
+                          });
                         } else {
                           Get.showSnackbar(GetSnackBar(
                             margin: const EdgeInsets.all(20),

@@ -109,6 +109,7 @@ class Languages extends Translations {
               'To this wallet address then attach the transfer image',
           'thanks_for_your_message,we_will_reply_as_soon_as_possible':
               'Thaks for your message, we will reply as soon as possible',
+          'dont_have_enough_amount': 'Don\'t have enough amount',
           'about-us':
               '*Welcome to Infinity Mining – Your Gateway to Cloud Mining At Infinity Mining\nwe offer a seamless and efficient way to mine cryptocurrency\nthrough virtual cloud mining.No need to invest in expensive hardware or worry\nabout power consumption and maintenance.\nOur platform allows you to rent\npowerful mining devices remotely and start earning instantly.\nBy using cutting-edge technology and secure cloud infrastructure,we provide a risk-free\nand reliable mining experience.All you need to do is select a mining device that\nfits your needs,invest once, and watch your profits grow.Each device comes with\ndetailed specifications to help you make the best choice.With our system, you’ll\nreceive daily mining rewards,ensuring consistent returns on your investment.\nAt Infinity Mining, we value transparency and ease of use.You can track your\nearnings in real-time, withdraw profits, or reinvest them for increased gains, all from\na user-friendly dashboard.\nStart mining today with Infinity Mining and be part of the future of cryptocurrency!'
         },

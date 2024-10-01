@@ -3,6 +3,8 @@ import 'package:infinityminer/view/admin/admin_message_details.dart';
 import 'package:infinityminer/view/admin/admin_user_details_screen.dart';
 import 'package:infinityminer/view/admin/admin_acreen.dart';
 import 'package:infinityminer/view/admin/admin_request_details.dart';
+import 'package:infinityminer/view/admin/admin_withdraw_details.dart';
+import 'package:infinityminer/view/admin/admin_withdraw_screen.dart';
 import 'package:infinityminer/view/refer_code/refer_code_screen.dart';
 import 'package:infinityminer/view/register/privacy_policy_screen.dart';
 import 'package:infinityminer/view/user/contact_us/contact_us_screen.dart';
@@ -25,6 +27,10 @@ class AppRoutes {
       page: () => const AdminScreen(),
     ),
     GetPage(
+      name: '/withdraw',
+      page: () => const AdminWithdrawScreen(),
+    ),
+    GetPage(
       name: '/privacy-policy',
       page: () => const PrivacyPolicyScreen(),
     ),
@@ -40,6 +46,9 @@ class AppRoutes {
     GetPage(name: '/refer-code/:userId', page: () => const ReferCodeScreen()),
     GetPage(
         name: '/request-details/:id', page: () => const AdminRequestDetails()),
+    GetPage(
+        name: '/withdraw-details/:id',
+        page: () => const AdminWithdrawDetailsScreen()),
     GetPage(
         name: '/user-details/:uid', page: () => const AdminUserDetailsScreen()),
     GetPage(

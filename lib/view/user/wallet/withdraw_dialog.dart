@@ -54,9 +54,10 @@ class _WithdrawDialogState extends State<WithdrawDialog> {
                   return;
                 }
 
-                //   if (double.tryParse(amount.text)) {
-                //   return;
-                // }
+                if ((double.tryParse(amount.text) ?? 0) >
+                    (double.tryParse(authController.userData!.profit) ?? 0)) {
+                  customUi.showToastMessage('dont_have_enough_amount');
+                }
 
                 setState(() {
                   loading = true;
@@ -67,6 +68,7 @@ class _WithdrawDialogState extends State<WithdrawDialog> {
                   'userData': authController.userData!.toJson(),
                   'amount': amount.text,
                   'wallet': address.text,
+                  'status': 'pending',
                   'timestamp': DateTime.now().toIso8601String()
                 });
 

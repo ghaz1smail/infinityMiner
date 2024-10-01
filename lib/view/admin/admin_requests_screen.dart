@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinityminer/helper/get_initial.dart';
 import 'package:infinityminer/models/request_model.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
 import 'package:paginate_firestore_plus/paginate_firestore.dart';
@@ -40,7 +40,7 @@ class AdminRequestsScreen extends StatelessWidget {
             ),
           );
         },
-        query: FirebaseFirestore.instance.collection('transfer'),
+        query: firestore.collection('transfer'),
         itemBuilderType: PaginateBuilderType.listView,
       ),
     );

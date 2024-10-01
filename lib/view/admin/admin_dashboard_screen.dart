@@ -153,6 +153,50 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     ),
                   ),
                 ),
+                GestureDetector(
+                  onTap: () {
+                    adminController.changeSelectedIndex('/withdraw');
+                  },
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.attach_money,
+                                  color: appTheme.primaryColor),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'withdraw'.tr,
+                                style: TextStyle(
+                                    fontSize: 30, color: appTheme.primaryColor),
+                              ),
+                            ],
+                          ),
+                          FutureBuilder(
+                            future: firestore.collection('withdraw').get(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return AnimatedFlipCounter(
+                                  value: snapshot.data!.size,
+                                  fractionDigits: 0,
+                                  suffix: "",
+                                  textStyle: const TextStyle(fontSize: 30),
+                                );
+                              }
+                              return const CircularProgressIndicator();
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             )
           ],

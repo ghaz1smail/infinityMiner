@@ -40,7 +40,7 @@ class _AdminUserDetailsScreenState extends State<AdminUserDetailsScreen> {
 
   @override
   void initState() {
-    adminController.checkUserRoute();
+    adminController.checkUserRoute(updateData: false);
     getUserData();
     super.initState();
   }

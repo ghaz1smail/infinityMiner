@@ -47,6 +47,17 @@ class AdminDrawerMenu extends StatelessWidget {
           ListTile(
             onTap: () {
               Get.back();
+              adminController.changeSelectedIndex('/withdraw');
+            },
+            title: Text(
+              'withdraw'.tr,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Get.back();
               authController.logOut();
             },
             title: Text(

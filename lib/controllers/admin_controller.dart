@@ -21,6 +21,9 @@ class AdminController extends GetxController {
       case '/messages':
         selectedIndex.value = 3;
         break;
+      case '/withdraw':
+        selectedIndex.value = 4;
+        break;
     }
     checkUserRoute();
   }

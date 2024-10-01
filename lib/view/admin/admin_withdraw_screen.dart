@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinityminer/helper/get_initial.dart';
-import 'package:infinityminer/models/contact_model.dart';
+import 'package:infinityminer/models/withdraw_model.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
 import 'package:paginate_firestore_plus/paginate_firestore.dart';
 
-class AdminMessagesScreen extends StatelessWidget {
-  const AdminMessagesScreen({super.key});
+class AdminWithdrawScreen extends StatelessWidget {
+  const AdminWithdrawScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('messages'.tr),
+        title: Text('withdraw'.tr),
       ),
       body: PaginateFirestore(
         onEmpty: Center(
@@ -22,20 +22,21 @@ class AdminMessagesScreen extends StatelessWidget {
         )),
         initialLoader: const CustomLoading(),
         itemBuilder: (context, documentSnapshots, index) {
-          ContactModel document =
-              ContactModel.fromJson(documentSnapshots[index].data() as Map);
+          WithdrawModel document =
+              WithdrawModel.fromJson(documentSnapshots[index].data() as Map);
           return Card(
+            color: document.status == 'done' ? Colors.green : null,
             child: ListTile(
               onTap: () {
-                Get.toNamed('/message-details/${document.id}');
+                Get.toNamed('/withdraw-details/${document.id}');
               },
               title: Text(
-                document.name,
+                document.userData.name,
               ),
             ),
           );
         },
-        query: firestore.collection('contact'),
+        query: firestore.collection('withdraw'),
         itemBuilderType: PaginateBuilderType.listView,
       ),
     );

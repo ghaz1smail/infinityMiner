@@ -68,6 +68,16 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
+              TextButton(
+                onPressed: () {
+                  adminController.changeSelectedIndex('/withdraw');
+                },
+                child: Text(
+                  'withdraw'.tr,
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
               IconButton(
                 onPressed: () {
                   authController.logOut();

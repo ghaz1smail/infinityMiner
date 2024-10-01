@@ -8,6 +8,7 @@ import 'package:infinityminer/view/admin/admin_messages_screen.dart';
 import 'package:infinityminer/view/admin/admin_requests_screen.dart';
 import 'package:infinityminer/view/admin/admin_drawer_menu.dart';
 import 'package:infinityminer/view/admin/admin_users_screen.dart';
+import 'package:infinityminer/view/admin/admin_withdraw_screen.dart';
 import 'package:infinityminer/view/widgets/custom_loading.dart';
 
 class AdminScreen extends StatelessWidget {
@@ -34,7 +35,8 @@ class AdminScreen extends StatelessWidget {
                       AdminDashboardScreen(),
                       AdminUsersScreen(),
                       AdminRequestsScreen(),
-                      AdminMessagesScreen()
+                      AdminMessagesScreen(),
+                      AdminWithdrawScreen()
                     ],
                   );
           },
